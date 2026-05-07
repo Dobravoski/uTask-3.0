@@ -1,0 +1,104 @@
+import React, { useState } from "react"
+import Header from "../../components/Header"
+import "./styles.css"
+
+import illustration from "../../assets/login-illustration.svg"
+import eyeOpen from "../../assets/eye-open.svg"
+import eyeClosed from "../../assets/eye-closed.svg"
+
+function Login() {
+
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [passwordError, setPasswordError] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
+
+
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+
+        const isLoginInvalid = email !== "test@test.com" || password !== "123456"
+
+        setPasswordError(isLoginInvalid)
+
+        if(!isLoginInvalid) {
+            alert("Login efetuado com sucesso!")
+        }
+    }
+
+    return (
+        <>
+        <Header />
+
+        <main className="login-container">
+            <div className="login-content">
+
+                <div className="login-image">
+                    <img src={illustration} alt="Ilustração de login" />
+                </div>
+
+                <div className="divider"></div>
+
+                <div className="login-form">
+                    <h1>uTask 3.0</h1>
+
+                    <div className="form-wrapper">
+
+                        <form onSubmit={handleSubmit}>
+
+                            <div className="input-group">
+                                <label htmlFor="email">E-mail</label>
+                                <input
+                                    id="email"
+                                    type="email"
+                                    placeholder="Endereço de e-mail"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="input"
+                                />
+                            </div>
+
+                            <div className="input-group">
+                                <label htmlFor="password">Senha</label>
+                                <div className={passwordError ? "password-field error" : "password-field"}>
+                                    <input
+                                        id="password"
+                                        type={showPassword ? "text" : "password"}
+                                        placeholder="Senha secreta"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className="input"
+                                    />
+                                    <button
+                                        type="button"
+                                        className="password-toggle"
+                                        onClick={() => setShowPassword((currentValue) => !currentValue)}
+                                        aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+                                    >
+                                        <img src={showPassword ? eyeOpen : eyeClosed} alt="" />
+                                    </button>
+                                </div>
+                            </div>
+
+                            {passwordError && (<p className="error-message">Senha incorreta, tente novamente.</p>)}
+
+                            <a href="a" className="forgot-password">Esqueceu a senha?</a>
+
+                            <button type="submit" className="login-button">Entrar</button>
+
+                            <div className="form-divider"></div>
+
+                            <a href="#" className="register-link">Não tem cadastro ? Crie uma conta</a>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+        </>
+    )
+}
+
+export default Login
