@@ -157,11 +157,15 @@
 .forgot-password {
     width: fit-content;
     margin-top: 5px;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
 
     color: #226ED8;
     font-size: 11px;
     line-height: 1;
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .login-button {

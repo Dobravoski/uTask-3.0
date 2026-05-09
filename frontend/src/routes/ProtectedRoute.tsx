@@ -10,7 +10,7 @@ export default function ProtectedRoute({children}: ProtectedRouteProps) {
     const {token} = useAuth()
 
     if(!token) {
-        return <Navigate to="/login" />
+        return <Navigate to="/login" replace />
     }
 
     return children

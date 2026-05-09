@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import Header from "../../components/Header"
 import "./styles.css"
 import { useAuth } from "../../contexts/AuthContext"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 import illustration from "../../assets/login-illustration.svg"
 import eyeOpen from "../../assets/eye-open.svg"
@@ -24,8 +24,8 @@ function Login() {
         setPasswordError(false)
 
         try {
-            const response = await login(email, password)
-            navigate("/kanban")
+            await login(email, password)
+            navigate("/")
         } catch(error) {
             setPasswordError(true)
             console.error(error)
@@ -88,13 +88,13 @@ function Login() {
 
                             {passwordError && (<p className="error-message">Senha incorreta, tente novamente.</p>)}
 
-                            <a href="a" className="forgot-password">Esqueceu a senha?</a>
+                            <button type="button" className="forgot-password">Esqueceu a senha?</button>
 
                             <button type="submit" className="login-button">Entrar</button>
 
                             <div className="form-divider"></div>
 
-                            <a href="#" className="register-link">Não tem cadastro? Crie uma conta</a>
+                            <Link to="/register" className="register-link">Não tem cadastro? Crie uma conta</Link>
 
                         </form>
 

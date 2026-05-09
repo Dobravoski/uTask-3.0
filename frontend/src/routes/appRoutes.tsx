@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Navigate, Routes, Route } from "react-router-dom";
 
 import Login from "../pages/Login";
 import Register from "../pages/Register"
@@ -12,7 +12,9 @@ function AppRoutes() {
         <Routes>
             <Route path="/login" element={<PublicRoute> <Login/> </PublicRoute>} />
             <Route path="/register" element={<PublicRoute> <Register/> </PublicRoute>} />
+            <Route path="/" element={<ProtectedRoute> <Kanban/> </ProtectedRoute>} />
             <Route path="/kanban" element={<ProtectedRoute> <Kanban/> </ProtectedRoute>}/>
+            <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
     )
 }

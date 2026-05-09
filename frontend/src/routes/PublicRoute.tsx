@@ -10,7 +10,7 @@ export default function PublicRoute({children}: PublicRouteProps) {
     const {token} = useAuth();
 
     if(token) {
-        return <Navigate to="/kanban"/>
+        return <Navigate to="/" replace />
     }
 
     return children

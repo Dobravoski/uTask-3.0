@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
+import { createContext, useContext, useState, type ReactNode } from "react"
 import { login as loginService } from "../services/authService"
 
 interface User {
@@ -20,12 +20,50 @@ interface AuthProviderProps {
     children: ReactNode
 }
 
-const AuthContext = createContext({} as AuthContextData)
+const USER_STORAGE_KEY = "@utask:user"
+const TOKEN_STORAGE_KEY = "@utask:token"
+
+const AuthContext = createContext<AuthContextData | undefined>(undefined)
+
+function getStoredUser() {
+    const storedUser = localStorage.getItem(USER_STORAGE_KEY)
+
+    if(!storedUser) {
+        return null
+    }
+
+    try {
+        return JSON.parse(storedUser) as User
+    } catch {
+        localStorage.removeItem(USER_STORAGE_KEY)
+        return null
+    }
+}
+
+function getStoredToken() {
+    const storedToken = localStorage.getItem(TOKEN_STORAGE_KEY)
+
+    if(!storedToken) {
+        return null
+    }
+
+    try {
+        const parsedToken = JSON.parse(storedToken)
+
+        if(typeof parsedToken === "string") {
+            return parsedToken
+        }
+    } catch {
+        return storedToken
+    }
+
+    return storedToken
+}
 
 export function AuthProvider({children}: AuthProviderProps) {
 
-    const [user, setUser] = useState<User | null>(null)
-    const [token, setToken] = useState<string | null>(null)
+    const [user, setUser] = useState<User | null>(() => getStoredUser())
+    const [token, setToken] = useState<string | null>(() => getStoredToken())
 
     async function login(email: string, password: string) {
         const response = await loginService({email, password})
@@ -33,27 +71,17 @@ export function AuthProvider({children}: AuthProviderProps) {
         setUser(response.user);
         setToken(response.token);
 
-        localStorage.setItem("@utask:user", JSON.stringify(response.user));
-        localStorage.setItem("@utask:token", JSON.stringify(response.token));
+        localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(response.user));
+        localStorage.setItem(TOKEN_STORAGE_KEY, response.token);
     }
 
     function logout() {
         setUser(null);
         setToken(null);
 
-        localStorage.removeItem("@utask:user");
-        localStorage.removeItem("@utask:token");
+        localStorage.removeItem(USER_STORAGE_KEY);
+        localStorage.removeItem(TOKEN_STORAGE_KEY);
     }
-
-    useEffect(() => {
-        const storedUser = localStorage.getItem("@utask:user");
-        const storedToken = localStorage.getItem("@utask:token");
-
-        if(storedUser && storedToken) {
-            setUser(JSON.parse(storedUser));
-            setToken(storedToken)
-        }
-    }, [])
 
     return (
         <AuthContext.Provider value={{user, token, login, logout}}>
@@ -63,5 +91,11 @@ export function AuthProvider({children}: AuthProviderProps) {
 }
 
 export function useAuth() {
-    return useContext(AuthContext);
+    const context = useContext(AuthContext);
+
+    if(!context) {
+        throw new Error("useAuth deve ser usado dentro de um AuthProvider");
+    }
+
+    return context;
 }
