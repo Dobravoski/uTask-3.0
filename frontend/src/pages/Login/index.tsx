@@ -1,6 +1,8 @@
 import React, { useState } from "react"
 import Header from "../../components/Header"
 import "./styles.css"
+import { useAuth } from "../../contexts/AuthContext"
+import { useNavigate } from "react-router-dom"
 
 import illustration from "../../assets/login-illustration.svg"
 import eyeOpen from "../../assets/eye-open.svg"
@@ -13,17 +15,20 @@ function Login() {
     const [passwordError, setPasswordError] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
 
+    const {login} = useAuth();
+    const navigate = useNavigate()
 
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        const isLoginInvalid = email !== "test@test.com" || password !== "123456"
+        setPasswordError(false)
 
-        setPasswordError(isLoginInvalid)
-
-        if(!isLoginInvalid) {
-            alert("Login efetuado com sucesso!")
+        try {
+            const response = await login(email, password)
+            navigate("/kanban")
+        } catch(error) {
+            setPasswordError(true)
+            console.error(error)
         }
     }
 
@@ -89,7 +94,7 @@ function Login() {
 
                             <div className="form-divider"></div>
 
-                            <a href="#" className="register-link">Não tem cadastro ? Crie uma conta</a>
+                            <a href="#" className="register-link">Não tem cadastro? Crie uma conta</a>
 
                         </form>
 
