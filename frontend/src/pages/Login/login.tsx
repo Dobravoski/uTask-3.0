@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import Header from "../../components/Header"
-import "./styles.css"
+import "./login.css"
 import { useAuth } from "../../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
 
