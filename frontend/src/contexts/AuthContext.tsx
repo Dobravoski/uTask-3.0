@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, type ReactNode } from "react"
-import { login as loginService } from "../services/authService"
+import * as authService from "../services/authService"
 
 interface User {
     id: string,
@@ -66,7 +66,7 @@ export function AuthProvider({children}: AuthProviderProps) {
     const [token, setToken] = useState<string | null>(() => getStoredToken())
 
     async function login(email: string, password: string) {
-        const response = await loginService({email, password})
+        const response = await authService.login({email, password})
 
         setUser(response.user);
         setToken(response.token);

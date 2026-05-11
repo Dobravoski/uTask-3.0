@@ -1,6 +1,6 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Header from "../../components/Header"
-import "./styles.css"
+import "./login.css"
 import { useAuth } from "../../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
 
@@ -9,6 +9,7 @@ import eyeOpen from "../../assets/eye-open.svg"
 import eyeClosed from "../../assets/eye-closed.svg"
 
 function Login() {
+    useEffect(() => {document.title = "uTask 3.0 | Login"}, [])
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -40,7 +41,12 @@ function Login() {
             <div className="login-content">
 
                 <div className="login-image">
-                    <img src={illustration} alt="Ilustração de login" />
+                    <img
+                        src={illustration}
+                        alt="Ilustração de login"
+                        loading="eager"
+                        fetchPriority="high"
+                    />
                 </div>
 
                 <div className="divider"></div>

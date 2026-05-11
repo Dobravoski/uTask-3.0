@@ -1,0 +1,233 @@
+.register-container {
+    min-height: calc(100vh - 40px); /* 40px do Header */
+    padding: 30px 40px 22px; /* topo, esqueda/direita, baixo */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-content {
+    width: 100%;
+    max-width: 1040px;
+
+    display: grid;
+    grid-template-columns: minmax(340px, 457px) 2px minmax(420px, 1fr); /* fr = fração do espaço restante */
+    align-items: center;
+    column-gap: 62px;
+}
+
+.register-image {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* joga a imagem pra direita */
+}
+
+.register-image img {
+    width: min(100%, 486px); /* a img nunca passa de 468px, min() sempre escolhe o menor valor */
+    height: auto;
+    display: block;
+}
+
+.register-divider {
+    width: 2px;
+    height: min(84vh, 548px); /* vh = área verticalmente vísivel do navegador */
+    background-color: rgba(156, 199, 251, 0.7);
+}
+
+.register-form {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.register-form h1 {
+    margin: 0;
+
+    color: #226ED8;
+    font-size: 39px;
+    line-height: 1;
+    font-weight: 700;
+}
+
+.register-title-divider {
+    width: 100%;
+    max-width: 340px;
+    margin: 16px 0 34px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.register-title-divider::before { /* ::before faz com que se crie antes de tal elemento */
+    content: "";
+    width: 155px;
+    height: 1px;
+    background-color: #3B5F91;
+}
+
+.register-form-wrapper {
+    width: 100%;
+    max-width: 340px;
+}
+
+.register-form-wrapper h2 {
+    margin: 0 0 19px;
+
+    color: #001833;
+    font-size: 20px;
+    line-height: 1;
+    font-weight: 700;
+}
+
+.register-form-wrapper form {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.register-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.register-input-group + .register-input-group { /* Só aplica o estilo a um .register-input-group que vem imediatamente depois de outro */
+    margin-top: 18px; /* Logo só se aplica a todos exceto o primeiro */
+}
+
+.register-input-group label {
+    color: #001833;
+    font-size: 15px;
+    line-height: 1;
+    font-weight: 400;
+}
+
+.register-input,
+.register-password-field {
+    width: 100%;
+    height: 37px;
+
+    border: 1px solid #002D6C;
+    border-radius: 8px;
+    background-color: #EDF3FC;
+}
+
+.register-input {
+    padding: 0 12px;
+
+    color: #001833;
+    font-size: 14px;
+    outline: none;
+}
+
+.register-input::placeholder {
+    color: #5E7699;
+}
+
+.register-password-field {
+    position: relative; /* Vira referência para elementos com position:absolute */
+    display: flex;
+    align-items: center;
+}
+
+.register-password-field .register-input {
+    height: 100%;
+    padding-right: 47px;
+    border: 0;
+    background-color: transparent;
+}
+
+.register-password-field.error {
+    border-color: #CC0000;
+    background-color: #FFECEC;
+}
+
+.register-password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%; /* Move o topo do botão para metade da altura */
+    transform: translateY(-50%); /* Move o botão para metade da própria altura */
+
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.register-password-toggle img {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+.register-error-message {
+    margin: 5px 0 0;
+
+    color: #CC0000;
+    font-size: 11px;
+    line-height: 1;
+}
+
+.register-button {
+    width: 100%;
+    height: 41px;
+    margin-top: 29px;
+    padding: 0 16px;
+
+    border: none;
+    border-radius: 16px;
+    background-color: #226ED8;
+    color: #FFFFFF;
+
+    font-size: 15px;
+    line-height: 1;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.register-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.register-error-message + .register-button {
+    margin-top: 12px;
+}
+
+@media (max-width: 900px) {
+    .register-container {
+        padding: 32px 24px;
+    }
+
+    .register-content {
+        display: flex;
+        justify-content: center;
+    }
+
+    .register-image,
+    .register-divider {
+        display: none;
+    }
+
+    .register-form,
+    .register-form-wrapper,
+    .register-title-divider {
+        max-width: 376px;
+    }
+
+    .register-form h1 {
+        font-size: 40px;
+    }
+}
