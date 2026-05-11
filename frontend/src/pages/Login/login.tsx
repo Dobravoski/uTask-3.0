@@ -26,7 +26,7 @@ function Login() {
 
         try {
             await login(email, password)
-            navigate("/")
+            navigate("/kanban")
         } catch(error) {
             setPasswordError(true)
             console.error(error)

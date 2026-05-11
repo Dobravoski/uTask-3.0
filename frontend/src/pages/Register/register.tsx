@@ -168,9 +168,10 @@ function Register() {
                                         <img src={showConfirmPassword ? eyeOpen : eyeClosed} alt="" />
                                     </button>
                                 </div>
-                            </div>
 
-                            {error && (<p className="register-error-message">{error}</p>)}
+                                {error && (<p className="register-error-message">{error}</p>)}
+
+                            </div>
 
                             <button type="submit" className="register-button" disabled={isLoading}>
                                 {isLoading ? "Criando conta..." : "Criar cadastro"}

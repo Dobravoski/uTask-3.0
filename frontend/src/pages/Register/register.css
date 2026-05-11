@@ -202,15 +202,7 @@
     cursor: not-allowed;
 }
 
-.register-error-message + .register-button {
-    margin-top: 12px;
-}
-
 @media (max-width: 900px) {
-    .register-container {
-        padding: 32px 24px;
-    }
-
     .register-content {
         display: flex;
         justify-content: center;
@@ -220,14 +212,65 @@
     .register-divider {
         display: none;
     }
+}
+
+@media (max-width: 480px) {
+    .register-container {
+        padding: 0px 24px;
+        align-items: center;
+    }
 
     .register-form,
     .register-form-wrapper,
     .register-title-divider {
-        max-width: 376px;
+        max-width: 100%;
     }
 
     .register-form h1 {
-        font-size: 40px;
+        font-size: 50px;
+        text-align: center;
+    }
+
+    .register-title-divider {
+        margin: 17px 0 37px;
+    }
+
+    .register-title-divider::before {
+        width: 177px;
+    }
+
+    .register-form-wrapper h2 {
+        margin-bottom: 22px;
+        font-size: 21px;
+    }
+
+    .register-input-group + .register-input-group {
+        margin-top: 20px;
+    }
+
+    .register-input-group label {
+        font-size: 18px;
+    }
+
+    .register-input,
+    .register-password-field {
+        height: 43px;
+    }
+
+    .register-input {
+        font-size: 15px;
+    }
+
+    .register-error-message {
+        margin-top: 8px;
+        font-size: 14px;
+        line-height: 1.25;
+    }
+
+    .register-button {
+        height: 48px;
+        margin-top: 27px;
+        border-radius: 18px;
+        font-size: 16px;
     }
 }

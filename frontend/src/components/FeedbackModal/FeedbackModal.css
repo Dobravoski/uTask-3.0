@@ -16,22 +16,24 @@
     position: relative;
 
     width: 100%;
-    max-width: 420px;
+    max-width: 460px;
 
-    padding: 32px;
+    padding: 36px;
 
     border-radius: 24px;
+    border: 2px solid #6AA51C;
 
-    background: white;
+    background: #FCFFF4;
+    box-shadow: 0 18px 40px rgba(0, 24, 51, 0.22);
 
     display: flex;
     align-items: flex-start;
-    gap: 16px;
+    gap: 18px;
 }
 
 .feedback-modal-icon {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
 
     border-radius: 50%;
 
@@ -45,7 +47,20 @@
 .feedback-modal-content {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
+}
+
+.feedback-modal-content h2 {
+    color: #001833;
+    font-size: 21px;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.feedback-modal-content p {
+    color: #001833;
+    font-size: 17px;
+    line-height: 1.45;
 }
 
 .feedback-modal-icon.success {
@@ -66,4 +81,42 @@
     background: transparent;
 
     cursor: pointer;
+}
+
+@media (max-width: 480px) {
+    .feedback-modal-overlay {
+        padding: 24px;
+    }
+
+    .feedback-modal {
+        max-width: none;
+        min-height: 192px;
+        padding: 34px 22px;
+        border-radius: 18px;
+        gap: 16px;
+        align-items: center;
+    }
+
+    .feedback-modal-icon {
+        width: 46px;
+        height: 46px;
+    }
+
+    .feedback-modal-icon img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .feedback-modal-content {
+        gap: 24px;
+    }
+
+    .feedback-modal-content h2 {
+        font-size: 19px;
+    }
+
+    .feedback-modal-content p {
+        font-size: 17px;
+        line-height: 1.5;
+    }
 }

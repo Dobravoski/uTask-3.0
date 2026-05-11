@@ -203,10 +203,6 @@
 }
 
 @media (max-width: 768px) {
-    .login-container {
-        min-height: calc(100vh - 40px);
-        padding: 32px 24px;
-    }
 
     .login-content {
         display: flex;
@@ -217,13 +213,69 @@
     .divider {
         display: none;
     }
+}
+
+@media (max-width: 480px) {
 
     .login-form {
-        max-width: 376px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .login-container {
+        padding: 32px 23px;
+        align-items: center;
     }
 
     .login-form h1 {
-        font-size: 40px;
-        margin-bottom: 32px;
+        margin-bottom: 48px;
+        font-size: 50px;
+        text-align: center;
+    }
+
+    .input-group + .input-group {
+        margin-top: 20px;
+    }
+
+    .input-group label {
+        font-size: 18px;
+    }
+
+    .input,
+    .password-field {
+        height: 45px;
+    }
+
+    .input {
+        font-size: 15px;
+    }
+
+    .error-message {
+        margin-top: 8px;
+        font-size: 14px;
+        line-height: 1.25;
+    }
+
+    .forgot-password {
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+    .login-button {
+        height: 46px;
+        margin-top: 27px;
+        border-radius: 18px;
+        font-size: 16px;
+    }
+
+    .form-divider {
+        width: 52%;
+        margin-top: 27px;
+    }
+
+    .register-link {
+        margin-top: 29px;
+        font-size: 16px;
+        line-height: 1.3;
     }
 }
