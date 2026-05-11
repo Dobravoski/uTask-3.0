@@ -197,6 +197,11 @@
     cursor: pointer;
 }
 
+.register-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
 .register-error-message + .register-button {
     margin-top: 12px;
 }
