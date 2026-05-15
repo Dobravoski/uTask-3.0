@@ -7,8 +7,6 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: stretch;
     column-gap: 40px;
-
-    position: relative;
 }
 
 .add-task-button {
@@ -26,12 +24,8 @@
 
     cursor: pointer;
 
-    position: absolute;
-    left: calc((100% - 80px) / 3 - 36px);
-    top: -8px;
-
     transition: transform 0.2s ease, filter 0.2s ease;
-    z-index: 2;
+    flex: 0 0 auto;
 }
 
 .add-task-button:hover {
@@ -55,8 +49,6 @@
     }
 
     .add-task-button {
-        left: auto;
-        right: 0;
-        top: -4px;
+        margin-left: auto;
     }
 }

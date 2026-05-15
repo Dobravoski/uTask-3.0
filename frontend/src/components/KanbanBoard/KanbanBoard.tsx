@@ -29,16 +29,17 @@ export default function KanbanBoard({todoTasks, doingTasks, doneTasks, onOpenMod
 
   return (
     <section className="kanban-board" data-kanban-board>
-      <button className="add-task-button" type="button" onClick={onOpenModal} aria-label="Criar nova task">
-        <img src={closeButton} alt=""/>
-      </button>
-
       {columns.map((column) => (
         <KanbanColumn
           key={column.status}
           status={column.status}
           title={column.title}
           tasks={column.tasks}
+          headerAction={column.status === "todo" ? (
+            <button className="add-task-button" type="button" onClick={onOpenModal} aria-label="Criar nova task">
+              <img src={closeButton} alt=""/>
+            </button>
+          ) : undefined}
           onMoveTask={onMoveTask}
           onDeleteTask={onDeleteTask}
         />

@@ -1,5 +1,6 @@
 import { TaskCard } from "../TaskCard/TaskCard";
 
+import type { ReactNode } from "react";
 import type { Task, TaskStatus } from "../../types/task";
 
 import "./KanbanColumn.css"
@@ -8,15 +9,17 @@ interface KanbanColumnProps {
     status: TaskStatus
     title: string
     tasks: Task[]
+    headerAction?: ReactNode
     onMoveTask: (taskId: string, direction: "forward" | "backward" | "reset") => void
     onDeleteTask: (taskId: string) => void
 }
 
-export function KanbanColumn({status, title, tasks, onMoveTask, onDeleteTask}: KanbanColumnProps) {
+export function KanbanColumn({status, title, tasks, headerAction, onMoveTask, onDeleteTask}: KanbanColumnProps) {
     return (
         <section className="kanban-column" data-column-status={status}>
             <header className="kanban-column-header">
                 <h2>{title}</h2>
+                {headerAction}
             </header>
 
             <div className="kanban-column-tasks" data-droppable-id={status}>

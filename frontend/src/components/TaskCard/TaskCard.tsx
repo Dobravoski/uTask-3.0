@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { Task } from "../../types/task";
 import { getNextStatus, getPreviousStatus } from "../../utils/taskStatus";
 
@@ -21,10 +21,24 @@ export function TaskCard({task, onMoveTask, onDeleteTask}: TaskCardProps) {
     const [isDescriptionOpen, setIsDescriptionOpen] = useState(false)
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
+    const menuRef = useRef<HTMLDivElement | null>(null)
+
     const canMoveForward = getNextStatus(task.status) !== null
     const canMoveBackward = getPreviousStatus(task.status) !== null
     const canReset = task.status === "done"
     const description = task.description.trim() || "Sem descrição cadastrada."
+
+    useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+        if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+            setIsMenuOpen(false)
+        }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+
+    return () => {document.removeEventListener("mousedown", handleClickOutside)}
+}, [])
 
     function handleDeleteTask() {
         onDeleteTask(task.id)
@@ -40,7 +54,7 @@ export function TaskCard({task, onMoveTask, onDeleteTask}: TaskCardProps) {
             <div className="task-card-header">
                 <h3>{task.title}</h3>
 
-                <div className="task-menu">
+                <div className="task-menu" ref={menuRef}>
                     <button
                         className="task-menu-button"
                         type="button"
