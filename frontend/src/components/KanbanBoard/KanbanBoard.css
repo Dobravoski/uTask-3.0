@@ -1,0 +1,58 @@
+.kanban-board {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: flex-start;
+    column-gap: 50px;
+
+    position: relative;
+}
+
+.add-task-button {
+    width: 36px;
+    height: 36px;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color: transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    position: absolute;
+    left: calc((100% - 100px) / 3 - 18px);
+    top: -8px;
+
+    transition: transform 0.2s ease, filter 0.2s ease;
+    z-index: 2;
+}
+
+.add-task-button:hover {
+    transform: scale(1.04);
+    filter: drop-shadow(0 6px 10px rgba(34, 110, 216, 0.2));
+}
+
+.add-task-button img {
+    width: 36px;
+    height: 36px;
+
+    transform: rotate(45deg);
+}
+
+@media (max-width: 980px) {
+    .kanban-board {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .add-task-button {
+        left: auto;
+        right: 0;
+        top: -4px;
+    }
+}
