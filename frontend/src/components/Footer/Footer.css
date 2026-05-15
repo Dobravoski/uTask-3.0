@@ -1,14 +1,15 @@
 .footer {
     width: 100%;
+    flex: 0 0 auto;
 
     background-color: #1558ad;
     color: #ffffff;
 
-    padding: 20px 32px;
+    padding: 13px 32px;
 }
 
 .footer-content {
-    width: min(1190px, 100%);
+    width: min(970px, 100%);
     margin: 0 auto;
 
     display: flex;

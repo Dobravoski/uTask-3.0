@@ -1,24 +1,24 @@
 .kanban-page {
-    min-height: 100vh;
+    height: 100vh;
 
     display: flex;
     flex-direction: column;
 
     background-color: #fafafa;
+    overflow: hidden;
 }
 
 .kanban-content {
     flex: 1;
+    min-height: 0;
 
-    width: min(1190px, 100%);
+    width: min(970px, 100%);
     margin: 0 auto;
-    padding: 40px 0 38px;
+    padding: 24px 0 26px;
 
     display: flex;
     flex-direction: column;
-    gap: 42px;
-
-    overflow: visible;
+    gap: 26px;
 }
 
 @media (max-width: 1240px) {
@@ -29,6 +29,12 @@
 }
 
 @media (max-width: 720px) {
+    .kanban-page {
+        min-height: 100vh;
+        height: auto;
+        overflow: visible;
+    }
+
     .kanban-content {
         padding: 28px 20px;
         gap: 28px;

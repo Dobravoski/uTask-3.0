@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 
 import "./CreateTaskModal.css"
 import closeButton from "../../assets/close-button.svg"
@@ -12,6 +12,23 @@ interface CreateTaskModalProps {
 export default function CreateTaskModal({isOpen, onClose, onCreateTask}: CreateTaskModalProps) {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
+
+    useEffect(() => {
+        function handleEscapeKey(event: KeyboardEvent) {
+            if(event.key === "Escape") {
+                onClose()
+            }
+        }
+
+        if(isOpen) {
+            document.body.style.overflow = "hidden"
+            window.addEventListener("keydown", handleEscapeKey)
+        }
+
+        return () => {
+            document.body.style.overflow = "auto"
+            window.removeEventListener("keydown", handleEscapeKey)}
+    }, [isOpen, onClose])
 
     if(!isOpen) {
         return null
@@ -31,8 +48,8 @@ export default function CreateTaskModal({isOpen, onClose, onCreateTask}: CreateT
     }
 
     return (
-        <div className="modal-overlay">
-            <section className="create-task-modal" role="dialog" aria-modal="true" aria-labelledby="create-task-title">
+        <div className="modal-overlay" onClick={onClose}>
+            <section className="create-task-modal" role="dialog" aria-modal="true" aria-labelledby="create-task-title" onClick={(event) => event.stopPropagation()}>
                 <header className="modal-header">
                     <h2 id="create-task-title">Nova Task</h2>
                     <button className="modal-close-button" type="button" onClick={onClose} aria-label="Fechar modal">
