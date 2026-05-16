@@ -1,5 +1,5 @@
 import { useState, useEffect, type FormEvent } from "react"
-import Header from "../../components/Header"
+import Header from "../../components/Login-Register-Header/Header"
 import "./register.css"
 import { register, RegisterError } from "../../services/authService"
 import { useNavigate } from "react-router-dom"

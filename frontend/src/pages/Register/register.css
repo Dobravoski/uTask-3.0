@@ -1,5 +1,5 @@
 .register-container {
-    min-height: calc(100vh - 40px); /* 40px do Header */
+    min-height: calc(100vh - 50px); /* 50px do Header */
     padding: 30px 40px 22px; /* topo, esqueda/direita, baixo */
 
     display: flex;

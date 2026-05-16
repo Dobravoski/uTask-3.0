@@ -2,7 +2,7 @@ import { Navigate, Routes, Route } from "react-router-dom";
 
 import Login from "../pages/Login/login";
 import Register from "../pages/Register/register";
-import Kanban from "../pages/Kanban";
+import Kanban from "../pages/Kanban/Kanban";
 
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";

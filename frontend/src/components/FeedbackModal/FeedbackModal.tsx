@@ -1,7 +1,7 @@
 import "./FeedbackModal.css"
 
 import successRegister from "../../assets/success-register.svg"
-import errorRegister from "../../assets/error-register.svg"
+import errorRegister from "../../assets/error.svg"
 
 type FeedbackModalProps = {
     title: string
