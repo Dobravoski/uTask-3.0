@@ -7,7 +7,7 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "typeorm": "typeorm-ts-node-commonjs -d src/database/data-source.ts"
+    "typeorm": "node -r ts-node/register ./node_modules/typeorm/cli.js -d src/database/data-source.ts"
   },
   "keywords": [],
   "author": "",
