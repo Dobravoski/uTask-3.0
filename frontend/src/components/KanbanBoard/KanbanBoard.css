@@ -1,3 +1,14 @@
+.kanban-board-wrapper {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+}
+
 .kanban-board {
     flex: 1;
     min-height: 0;
@@ -7,6 +18,11 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: stretch;
     column-gap: 40px;
+}
+
+.kanban-navigation-button,
+.kanban-pagination {
+    display: none;
 }
 
 .add-task-button {
@@ -41,11 +57,81 @@
 }
 
 @media (max-width: 980px) {
+    .kanban-board-wrapper {
+        flex: initial;
+        min-height: auto;
+        padding: 0 26px 38px;
+    }
+
     .kanban-board {
         flex: initial;
         min-height: auto;
         grid-template-columns: 1fr;
-        gap: 24px;
+    }
+
+    .kanban-navigation-button {
+        width: 28px;
+        height: 44px;
+
+        border: none;
+        background: transparent;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0;
+
+        cursor: pointer;
+
+        position: absolute;
+        top: 50%;
+        z-index: 3;
+
+        transform: translateY(-50%);
+    }
+
+    .kanban-navigation-button-previous {
+        left: -4px;
+    }
+
+    .kanban-navigation-button-next {
+        right: -4px;
+    }
+
+    .kanban-navigation-button img {
+        width: 12px;
+        height: 20px;
+    }
+
+    .kanban-pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .kanban-pagination-dot {
+        width: 13px;
+        height: 13px;
+
+        border: none;
+        border-radius: 50%;
+
+        background-color: #c7c7c7;
+
+        padding: 0;
+
+        cursor: pointer;
+    }
+
+    .kanban-pagination-dot-active {
+        background-color: #226ed8;
     }
 
     .add-task-button {

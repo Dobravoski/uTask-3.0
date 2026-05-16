@@ -1,4 +1,4 @@
-import "./styles.css";
+import "./KanbanHeader.css";
 import lightModeButton from "../../assets/light-mode-button.svg"
 import unectLogo from "../../assets/unect-logo.svg"
 

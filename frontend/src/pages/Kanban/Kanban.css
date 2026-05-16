@@ -31,12 +31,12 @@
 @media (max-width: 720px) {
     .kanban-page {
         min-height: 100vh;
-        height: auto;
-        overflow: visible;
+        height: 100vh;
+        overflow: hidden;
     }
 
     .kanban-content {
-        padding: 28px 20px;
+        padding: 30px 20px 26px;
         gap: 28px;
     }
 }

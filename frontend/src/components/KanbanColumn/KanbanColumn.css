@@ -60,14 +60,39 @@
 }
 
 @media (max-width: 980px) {
+    .kanban-column {
+        display: none;
+    }
+
+    .kanban-column-active {
+        display: flex;
+    }
+
     .kanban-column-header h2 {
         font-size: 1.3rem;
     }
 
     .kanban-column-tasks {
         flex: initial;
-        min-height: 220px;
-        max-height: 420px;
+        min-height: 398px;
+        max-height: 398px;
         padding: 18px;
+    }
+}
+
+@media (max-width: 430px) {
+    .kanban-column {
+        gap: 12px;
+    }
+
+    .kanban-column-header h2 {
+        font-size: 1.28rem;
+    }
+
+    .kanban-column-tasks {
+        min-height: 418px;
+        max-height: 418px;
+        padding: 15px;
+        gap: 14px;
     }
 }

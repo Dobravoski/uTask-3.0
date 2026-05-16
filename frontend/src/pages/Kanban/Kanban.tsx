@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import "./Kanban.css"
-import Header from "../../components/KanbanHeader";
+import Header from "../../components/KanbanHeader/KanbanHeader";
 import Footer from "../../components/Footer/Footer";
 import PhraseCard from "../../components/PhraseCard/PhraseCard";
 import KanbanBoard from "../../components/KanbanBoard/KanbanBoard";
@@ -27,7 +27,7 @@ export default function Kanban() {
     setDailyPhrase(loadedPhrase)
   }
 
-  useEffect(() => {loadedPhrase()})
+  useEffect(() => {loadedPhrase()}, [])
 
   function openModal() {
     setIsModalOpen(true)
