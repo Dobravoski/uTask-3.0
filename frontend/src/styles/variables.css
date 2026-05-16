@@ -1,32 +1,213 @@
 :root {
-    /* COLORS */
-    --color-primary: #226ed8;
-    --color-primary-light: #4b97f6;
-
-    --color-text: #202124;
-
-    --color-background: #fafafa;
-    --color-surface: #ffffff;
-
-    --color-column: #e9e9ea;
-
-    --color-danger: #df0000;
-
-    /* SHADOWS */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.18);
-
-    --shadow-md: 0 8px 16px rgba(27, 39, 58, 0.06);
-
-    --shadow-lg: 0 12px 28px rgba(27, 39, 58, 0.08);
-
-    --shadow-xl: 0 22px 50px rgba(27, 39, 58, 0.22);
-
-    /* BORDER RADIUS */
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
-    --radius-full: 999px;
-
-    /* TRANSITIONS */
     --transition-default: 0.2s ease;
+
+      /* BORDER RADIUS */
+
+    --radius-small: 4px;
+    --radius-medium: 8px;
+    --radius-large: 20px;
+    --radius-pill: 999px;
+
+    /*SHARED EFFECTS*/
+
+    --color-overlay-backdrop: rgba(32, 33, 36, 0.48);
+    --shadow-popover: 0 2px 8px rgba(0, 0, 0, 0.18);
+    --shadow-button-primary: 0 12px 20px rgba(34, 110, 216, 0.24);
+    --shadow-focus-ring: 0 0 0 3px rgba(34, 110, 216, 0.14);
+}
+
+[data-theme="light"] {
+
+    /*MAIN BACKGROUNDS*/
+
+    --color-background-primary: #FAFAFA;
+    --color-background-secondary: #FFFFFF;
+    --color-background-tertiary: #EEEEEE;
+    --color-background-quaternary: #C4C4C4;
+
+    /*SURFACES / CARDS / MODALS*/
+
+    --color-surface-primary: #FFFFFF;
+    --color-surface-secondary: #FAFAFA;
+    --color-surface-tertiary: #EEEEEE;
+
+    /*TEXT COLORS*/
+
+    --color-text-primary: #141414;
+    --color-text-secondary: #515151;
+    --color-text-muted: #8B8B8B;
+    --color-text-inverse: #FAFAFA;
+
+    /*PRIMARY BLUE COLORS*/
+
+    --color-primary-main: #226ED8;
+    --color-primary-hover: #114FA7;
+    --color-primary-light: #4890F5;
+    --color-primary-dark: #002D6C;
+
+    /*YELLOW ACCENT COLORS*/
+
+    --color-yellow-background: #FFFCEE;
+    --color-yellow-surface: #FFF5C0;
+    --color-yellow-primary: #FFE03F;
+    --color-yellow-secondary: #FFD569;
+    --color-yellow-accent: #FBB910;
+
+    /*STATUS COLORS*/
+
+    --color-success: #226ED8;
+    --color-error: #DF0000;
+
+    /*BORDERS*/
+
+    --color-border-primary: #D9D9D9;
+    --color-border-secondary: #C4C4C4;
+
+    /*ICON COLORS*/
+
+    --color-icon-primary: #226ED8;
+    --color-icon-secondary: #515151;
+
+    /*SHADOWS*/
+
+    --shadow-card:
+        0 8px 16px rgba(27, 39, 58, 0.06);
+
+    --shadow-modal:
+        0 22px 50px rgba(27, 39, 58, 0.22);
+
+    --shadow-header:
+        0 4px 12px rgba(0, 45, 108, 0.22);
+
+    /*BUTTON COLORS*/
+
+    --color-button-primary-background: #226ED8;
+    --color-button-primary-hover: #114FA7;
+    --color-button-primary-text: #FFFFFF;
+
+    --color-button-secondary-background: #FFFFFF;
+    --color-button-secondary-text: #226ED8;
+
+    /*INPUT COLORS*/
+
+    --color-input-background: #EEEEEE;
+    --color-input-border: transparent;
+    --color-input-focus-border: #74A7FF;
+    --color-input-text: #141414;
+    --color-input-placeholder: #8B8B8B;
+
+    /*SCROLLBAR COLORS*/
+
+    --color-scrollbar-thumb: #BFC0C2;
+    --color-scrollbar-track: transparent;
+
+    /*AUTH / FEEDBACK*/
+
+    --color-auth-text: #001833;
+    --color-auth-input-background: #EDF3FC;
+    --color-auth-placeholder: #5E7699;
+    --color-auth-divider: rgba(156, 199, 251, 0.7);
+    --color-error-background: #FFECEC;
+    --color-feedback-background: #FCFFF4;
+    --color-feedback-border: rgba(106, 165, 28, 0.45);
+    --color-feedback-success-background: rgba(0, 255, 0, 0.15);
+    --color-feedback-error-background: rgba(255, 0, 0, 0.15);
+}
+
+[data-theme="dark"] {
+
+    /*MAIN BACKGROUNDS*/
+
+    --color-background-primary: #222222;
+    --color-background-secondary: #2E2E2E;
+    --color-background-tertiary: #333333;
+    --color-background-quaternary: #3D3D3D;
+
+    /*SURFACES / CARDS / MODALS*/
+
+    --color-surface-primary: #2E2E2E;
+    --color-surface-secondary: #333333;
+    --color-surface-tertiary: #3D3D3D;
+
+    /*TEXT COLORS*/
+
+    --color-text-primary: #FAFAFA;
+    --color-text-secondary: #C4C4C4;
+    --color-text-muted: #A0A0A0;
+    --color-text-inverse: #141414;
+
+    /*PRIMARY BLUE COLORS*/
+
+    --color-primary-main: #226ED8;
+    --color-primary-hover: #5C9DFF;
+    --color-primary-light: #4890F5;
+    --color-primary-dark: #111111;
+
+    /*YELLOW ACCENT COLORS*/
+
+    --color-yellow-background: #515151;
+    --color-yellow-surface: #3D3D3D;
+    --color-yellow-primary: #FFE03F;
+    --color-yellow-secondary: #3D3D3D;
+    --color-yellow-accent: #FFFFFF;
+
+    /*STATUS COLORS*/
+
+    --color-success: #226ED8;
+    --color-error: #FFAFAF;
+
+    /*BORDERS*/
+
+    --color-border-primary: #515151;
+    --color-border-secondary: #3D3D3D;
+
+    /*ICON COLORS*/
+
+    --color-icon-primary: #4890F5;
+    --color-icon-secondary: #C4C4C4;
+
+    /*SHADOWS*/
+
+    --shadow-card:
+        0 8px 16px rgba(0, 0, 0, 0.35);
+
+    --shadow-modal:
+        0 22px 50px rgba(0, 0, 0, 0.45);
+
+    --shadow-header:
+        0 4px 12px rgba(0, 0, 0, 0.35);
+
+    /*BUTTON COLORS*/
+
+    --color-button-primary-background: #226ED8;
+    --color-button-primary-hover: #5C9DFF;
+    --color-button-primary-text: #FFFFFF;
+
+    --color-button-secondary-background: #333333;
+    --color-button-secondary-text: #FAFAFA;
+
+    /*INPUT COLORS*/
+
+    --color-input-background: #333333;
+    --color-input-border: transparent;
+    --color-input-focus-border: #5C9DFF;
+    --color-input-text: #FAFAFA;
+    --color-input-placeholder: #A0A0A0;
+
+    /*SCROLLBAR COLORS*/
+
+    --color-scrollbar-thumb: #515151;
+    --color-scrollbar-track: transparent;
+
+    /*AUTH / FEEDBACK*/
+
+    --color-auth-text: #FAFAFA;
+    --color-auth-input-background: #333333;
+    --color-auth-placeholder: #A0A0A0;
+    --color-auth-divider: #515151;
+    --color-error-background: #3D3D3D;
+    --color-feedback-background: #2E2E2E;
+    --color-feedback-border: #515151;
+    --color-feedback-success-background: rgba(34, 110, 216, 0.2);
+    --color-feedback-error-background: rgba(255, 175, 175, 0.18);
 }

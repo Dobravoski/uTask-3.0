@@ -32,7 +32,7 @@
 .register-divider {
     width: 2px;
     height: min(84vh, 548px); /* vh = área verticalmente vísivel do navegador */
-    background-color: rgba(156, 199, 251, 0.7);
+    background-color: var(--color-auth-divider);
 }
 
 .register-form {
@@ -46,7 +46,7 @@
 .register-form h1 {
     margin: 0;
 
-    color: #226ED8;
+    color: var(--color-primary-main);
     font-size: 39px;
     line-height: 1;
     font-weight: 700;
@@ -65,7 +65,7 @@
     content: "";
     width: 155px;
     height: 1px;
-    background-color: #3B5F91;
+    background-color: var(--color-primary-dark);
 }
 
 .register-form-wrapper {
@@ -76,7 +76,7 @@
 .register-form-wrapper h2 {
     margin: 0 0 19px;
 
-    color: #001833;
+    color: var(--color-auth-text);
     font-size: 20px;
     line-height: 1;
     font-weight: 700;
@@ -100,7 +100,7 @@
 }
 
 .register-input-group label {
-    color: #001833;
+    color: var(--color-auth-text);
     font-size: 15px;
     line-height: 1;
     font-weight: 400;
@@ -111,21 +111,21 @@
     width: 100%;
     height: 37px;
 
-    border: 1px solid #002D6C;
-    border-radius: 8px;
-    background-color: #EDF3FC;
+    border: 1px solid var(--color-primary-dark);
+    border-radius: var(--radius-medium);
+    background-color: var(--color-auth-input-background);
 }
 
 .register-input {
     padding: 0 12px;
 
-    color: #001833;
+    color: var(--color-auth-text);
     font-size: 14px;
     outline: none;
 }
 
 .register-input::placeholder {
-    color: #5E7699;
+    color: var(--color-auth-placeholder);
 }
 
 .register-password-field {
@@ -142,8 +142,8 @@
 }
 
 .register-password-field.error {
-    border-color: #CC0000;
-    background-color: #FFECEC;
+    border-color: var(--color-error);
+    background-color: var(--color-error-background);
 }
 
 .register-password-toggle {
@@ -174,7 +174,7 @@
 .register-error-message {
     margin: 5px 0 0;
 
-    color: #CC0000;
+    color: var(--color-error);
     font-size: 11px;
     line-height: 1;
 }
@@ -186,9 +186,9 @@
     padding: 0 16px;
 
     border: none;
-    border-radius: 16px;
-    background-color: #226ED8;
-    color: #FFFFFF;
+    border-radius: var(--radius-large);
+    background-color: var(--color-button-primary-background);
+    color: var(--color-button-primary-text);
 
     font-size: 15px;
     line-height: 1;
@@ -270,7 +270,7 @@
     .register-button {
         height: 48px;
         margin-top: 27px;
-        border-radius: 18px;
+        border-radius: var(--radius-large);
         font-size: 16px;
     }
 }
