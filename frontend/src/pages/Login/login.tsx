@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import Header from "../../components/Login-Register-Header/Header"
 import "./login.css"
-import { useAuth } from "../../contexts/AuthContext"
+import { useAuth } from "../../contexts/useAuth"
 import { Link, useNavigate } from "react-router-dom"
 
 import illustration from "../../assets/login-illustration.svg"
