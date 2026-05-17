@@ -13,7 +13,7 @@ import { useTasks } from "../../hooks/useTasks";
 export default function Kanban() {
   useEffect(() => {document.title = "uTask 3.0 | Kanban"}, [])
 
-  const [dailyPhrase, setDailyPhrase] = useState("")
+  const [dailyPhrase, setDailyPhrase] = useState("Carregando frase do dia...")
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const {tasks, isLoading, createTask, moveTask, deleteTask} = useTasks()
