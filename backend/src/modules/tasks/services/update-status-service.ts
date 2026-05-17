@@ -35,7 +35,8 @@ export class UpdateTaskStatusService {
             title: task.title,
             description: task.description,
             status: task.status,
-            createdAt: task.createdAt
+            createdAt: task.createdAt,
+            updateAt: task.updateAt
         }
     }
 }

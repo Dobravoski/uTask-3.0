@@ -68,6 +68,7 @@ export function useTasks() {
 
     async function deleteTask(taskId: string) {
         try {
+            await taskService.deleteTask(taskId)
             const updatedTasks = tasks.filter((task) => task.id !== taskId)
             setTasks(updatedTasks)
         } catch (error) {
