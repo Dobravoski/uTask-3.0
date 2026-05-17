@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { taskService } from "../services/taskService"
-import type { Task } from "../types/task"
+import type { Task, TaskStatus } from "../types/task"
 import { getNextStatus, getPreviousStatus } from "../utils/taskStatus"
 
 export function useTasks() {
@@ -42,7 +42,7 @@ export function useTasks() {
                 return
             }
 
-            let newStatus = taskToUpdate.status
+            let newStatus: TaskStatus = taskToUpdate.status
 
             if (direction === "forward") {
                 newStatus = getNextStatus(taskToUpdate.status) ?? taskToUpdate.status
@@ -57,10 +57,14 @@ export function useTasks() {
             }
 
             const updatedTask = await taskService.updateTaskStatus(taskId, newStatus)
-            const updatedTasks = tasks.map((task) => task.id === taskId ? updatedTask : task)
-            const sortedTasks = [...updatedTasks].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-            
-            setTasks(sortedTasks)
+
+            setTasks((currentTasks) => {
+                const updatedTasks = currentTasks.map((task) => task.id === taskId ? updatedTask : task)
+
+                return [...updatedTasks].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+            })
+
+            await loadTasks()
         } catch (error) {
             console.error("Erro ao mover task:", error)
         }
@@ -69,8 +73,8 @@ export function useTasks() {
     async function deleteTask(taskId: string) {
         try {
             await taskService.deleteTask(taskId)
-            const updatedTasks = tasks.filter((task) => task.id !== taskId)
-            setTasks(updatedTasks)
+            setTasks((currentTasks) => currentTasks.filter((task) => task.id !== taskId))
+            await loadTasks()
         } catch (error) {
             console.error("Erro ao deletar task:", error)
         }
