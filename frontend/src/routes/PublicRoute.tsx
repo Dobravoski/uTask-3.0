@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/useAuth";
 import type { ReactNode } from "react";
 
 interface PublicRouteProps {
@@ -7,7 +7,11 @@ interface PublicRouteProps {
 }
 
 export default function PublicRoute({children}: PublicRouteProps) {
-    const {token} = useAuth();
+    const {loading, token} = useAuth();
+
+    if(loading) {
+        return null
+    }
 
     if(token) {
         return <Navigate to="/" replace />

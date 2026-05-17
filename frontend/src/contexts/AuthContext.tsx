@@ -1,20 +1,8 @@
-import { createContext, useContext, useState, type ReactNode } from "react"
+import { useCallback, useEffect, useState, type ReactNode } from "react"
+
 import * as authService from "../services/authService"
-
-interface User {
-    id: string,
-    name: string,
-    email: string
-}
-
-interface AuthContextData {
-    user: User | null,
-    token: string | null
-
-    login: (email: string, password: string) => Promise<void>
-
-    logout: () => void
-}
+import { api } from "../services/api"
+import { AuthContext, type User } from "./authContext"
 
 interface AuthProviderProps {
     children: ReactNode
@@ -22,8 +10,6 @@ interface AuthProviderProps {
 
 const USER_STORAGE_KEY = "@utask:user"
 const TOKEN_STORAGE_KEY = "@utask:token"
-
-const AuthContext = createContext<AuthContextData | undefined>(undefined)
 
 function getStoredUser() {
     const storedUser = localStorage.getItem(USER_STORAGE_KEY)
@@ -64,8 +50,9 @@ export function AuthProvider({children}: AuthProviderProps) {
 
     const [user, setUser] = useState<User | null>(() => getStoredUser())
     const [token, setToken] = useState<string | null>(() => getStoredToken())
+    const [loading, setLoading] = useState(() => Boolean(getStoredToken()))
 
-    async function login(email: string, password: string) {
+    const login = useCallback(async (email: string, password: string) => {
         const response = await authService.login({email, password})
 
         setUser(response.user);
@@ -73,29 +60,48 @@ export function AuthProvider({children}: AuthProviderProps) {
 
         localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(response.user));
         localStorage.setItem(TOKEN_STORAGE_KEY, response.token);
-    }
+    }, [])
 
-    function logout() {
+    const logout = useCallback(() => {
         setUser(null);
         setToken(null);
+        setLoading(false);
 
         localStorage.removeItem(USER_STORAGE_KEY);
         localStorage.removeItem(TOKEN_STORAGE_KEY);
-    }
+    }, [])
+
+    useEffect(() => {
+        if(!token) {
+            return
+        }
+
+        let isMounted = true
+
+        async function loadUser() {
+            try {
+                await api.get("/auth/me", {headers: {Authorization: `Bearer ${token}`}})
+            } catch {
+                if(isMounted) {
+                    logout()
+                }
+            } finally {
+                if(isMounted) {
+                    setLoading(false)
+                }
+            }
+        }
+
+        loadUser()
+
+        return () => {
+            isMounted = false
+        }
+    }, [logout, token])
 
     return (
-        <AuthContext.Provider value={{user, token, login, logout}}>
+        <AuthContext.Provider value={{user, token, loading, login, logout}}>
             {children}
         </AuthContext.Provider>
     )
-}
-
-export function useAuth() {
-    const context = useContext(AuthContext);
-
-    if(!context) {
-        throw new Error("useAuth deve ser usado dentro de um AuthProvider");
-    }
-
-    return context;
 }

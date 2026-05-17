@@ -1,3 +1,6 @@
+import axios from "axios"
+import { api } from "./api"
+
 interface LoginData {
     email: string,
     password: string
@@ -14,25 +17,20 @@ interface AuthResponse {
     user: User
 }
 
-const fakeUser: User = {
-    id: "1",
-    name: "Dobravoski",
-    email: "test@test.com"
-}
+export async function login(
+  data: LoginData
+): Promise<AuthResponse> {
+  try {
+    const response = await api.post("/auth/login", data);
 
-export async function login(data: LoginData) : Promise<AuthResponse> {
-    const {email, password} = data
-
-    await new Promise((resolve) => {setTimeout(resolve, 1000)})
-
-    if(email === "test@test.com" && password === "123456") {
-        return {
-            token: "fake-jwt-token",
-            user: fakeUser
-        }
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || "Erro ao fazer login", {cause: error});
     }
 
-    throw new Error("Email ou senha inválidos")
+    throw new Error("Erro inesperado", {cause: error});
+  }
 }
 
 interface RegisterData{
@@ -52,29 +50,22 @@ export class RegisterError extends Error {
         this.code = code
     }
 }
-
 export async function register(data: RegisterData) {
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    const email = data.email.trim().toLowerCase()
+  try {
+    const response = await api.post("/auth/register", data);
 
-    if(email === "exists@test.com") {
-        throw new RegisterError("EMAIL_ALREADY_EXISTS", "E-mail já cadastrado")
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const message = error.response?.data?.message;
+
+      if (message === "Email already exists") {
+        throw new RegisterError("EMAIL_ALREADY_EXISTS", "E-mail já cadastrado");
+      }
+
+      throw new RegisterError("NETWORK_ERROR", "Erro ao cadastrar usuário");
     }
 
-    if(email === "network@test.com") {
-        throw new RegisterError("NETWORK_ERROR", "Erro de conexão")
-    }
-
-    if(data.password.length < 6) {
-        throw new RegisterError("WEAK_PASSWORD", "Senha inválida")
-    }
-
-    return {
-        token: "fake-jwt-token",
-        user: {
-            id: "1",
-            name: data.name.trim(),
-            email
-        }
-    }
+    throw new RegisterError("NETWORK_ERROR", "Erro inesperado");
+  }
 }
