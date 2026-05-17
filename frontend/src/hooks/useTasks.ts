@@ -27,19 +27,8 @@ export function useTasks() {
 
     async function createTask(title: string, description: string) {
         try {
-            const newTask: Task = {
-                id: crypto.randomUUID(),
-                title,
-                description,
-                status: "todo",
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-            }
-
-            const updatedTasks = [newTask, ...tasks];
-            setTasks(updatedTasks);
-            await taskService.saveTasks(updatedTasks)
-
+            const newTask = await taskService.createTask(title, description)
+            setTasks((currentTasks) => [newTask, ...currentTasks])
         } catch (error) {
             console.error("Erro ao criar task:", error)
         }
@@ -47,36 +36,31 @@ export function useTasks() {
 
     async function moveTask(taskId: string, direction: "forward" | "backward" | "reset") {
         try {
-            const updatedTasks = tasks.map((task) => {
-                if (task.id !== taskId) {
-                    return task
-                }
+            const taskToUpdate = tasks.find((task) => task.id === taskId)
 
-                let newStatus = task.status
+            if(!taskToUpdate) {
+                return
+            }
 
-                if (direction === "forward") {
-                    newStatus = getNextStatus(task.status) ?? task.status
-                }
+            let newStatus = taskToUpdate.status
 
-                if (direction === "backward") {
-                    newStatus = getPreviousStatus(task.status) ?? task.status
-                }
+            if (direction === "forward") {
+                newStatus = getNextStatus(taskToUpdate.status) ?? taskToUpdate.status
+            }
 
-                if (direction === "reset") {
-                    newStatus = "todo"
-                }
+            if (direction === "backward") {
+                newStatus = getPreviousStatus(taskToUpdate.status) ?? taskToUpdate.status
+            }
 
-                return {
-                    ...task,
-                    status: newStatus,
-                    updatedAt: new Date().toISOString(),
-                }
-            })
+            if (direction === "reset") {
+                newStatus = "todo"
+            }
 
-            const sortedTasks = [...updatedTasks].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+            const updatedTask = await taskService.updateTaskStatus(taskId, newStatus)
+            const updatedTasks = tasks.map((task) => task.id === taskId ? updatedTask : task)
+            const sortedTasks = [...updatedTasks].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
             
             setTasks(sortedTasks)
-            await taskService.saveTasks(sortedTasks)
         } catch (error) {
             console.error("Erro ao mover task:", error)
         }
@@ -86,7 +70,6 @@ export function useTasks() {
         try {
             const updatedTasks = tasks.filter((task) => task.id !== taskId)
             setTasks(updatedTasks)
-            await taskService.saveTasks(updatedTasks)
         } catch (error) {
             console.error("Erro ao deletar task:", error)
         }

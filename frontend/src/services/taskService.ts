@@ -1,49 +1,47 @@
-import type { Task } from "../types/task";
+import type { Task, TaskStatus } from "../types/task"
+import { api } from "./api"
 
-const TASKS_STORAGE_KEY = "utask_tasks"
+const TOKEN_STORAGE_KEY = "@utask:token"
 
-const mockTasks: Task[] = [
-  {
-    id: crypto.randomUUID(),
-    title: "Criar tela de login",
-    description: "Finalizar layout e validações da tela de login.",
-    status: "done",
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  },
-  {
-    id: crypto.randomUUID(),
-    title: "Implementar Kanban",
-    description: "Estruturar colunas e cards do board.",
-    status: "doing",
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  },
-  {
-    id: crypto.randomUUID(),
-    title: "Adicionar dark mode",
-    description: "",
-    status: "todo",
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  },
-]
+function getAuthHeaders() {
+    const token = localStorage.getItem(TOKEN_STORAGE_KEY)
 
+    if(!token) {
+        return {}
+    }
+
+    return {
+        Authorization: `Bearer ${token}`
+    }
+}
 
 export const taskService = {
     async getTasks(): Promise<Task[]> {
-        const storedTasks = localStorage.getItem(TASKS_STORAGE_KEY)
+        const response = await api.get("/tasks", {
+            headers: getAuthHeaders()
+        })
 
-        if(storedTasks) {
-            return JSON.parse(storedTasks)
-        }
-
-        localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(mockTasks))
-
-        return mockTasks
+        return response.data
     },
 
-    async saveTasks(tasks: Task[]): Promise<void> {
-        localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(tasks))
+    async createTask(title: string, description: string): Promise<Task> {
+        const response = await api.post("/tasks", {
+            title,
+            description
+        }, {
+            headers: getAuthHeaders()
+        })
+
+        return response.data
+    },
+
+    async updateTaskStatus(taskId: string, status: TaskStatus): Promise<Task> {
+        const response = await api.patch(`/tasks/${taskId}/status`, {
+            status
+        }, {
+            headers: getAuthHeaders()
+        })
+
+        return response.data
     }
 }

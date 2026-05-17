@@ -4,6 +4,7 @@ import "dotenv/config"
 import { DataSource } from "typeorm"
 
 import { User } from "./entities/User"
+import { Task } from "./entities/Task"
 
 export const appDataSource = new DataSource({
     type: "postgres",
@@ -22,7 +23,7 @@ export const appDataSource = new DataSource({
 
     logging: true,
 
-    entities: [User],
+    entities: [User, Task],
 
     migrations: ["src/database/migrations/*.ts"]
 })
