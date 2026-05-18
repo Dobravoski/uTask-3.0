@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { KanbanColumn } from "../KanbanColumn/KanbanColumn";
+import { TaskCardPreview } from "../TaskCard/TaskCard";
 
 import type { Task, TaskStatus } from "../../types/task";
+
+import { DndContext, DragOverlay, type DragEndEvent, type DragStartEvent } from "@dnd-kit/core";
 
 import "./KanbanBoard.css"
 import closeButton from "../../assets/close-button.svg"
@@ -13,7 +16,7 @@ interface KanbanBoardProps {
   doingTasks: Task[]
   doneTasks: Task[]
   onOpenModal: () => void
-  onMoveTask: (taskId: string, direction: "forward" | "backward" | "reset") => void
+  onMoveTask: (taskId: string, newStatus: TaskStatus) => void
   onDeleteTask: (taskId: string) => void
 }
 
@@ -25,12 +28,15 @@ type KanbanColumnConfig = {
 
 export default function KanbanBoard({todoTasks, doingTasks, doneTasks, onOpenModal, onMoveTask, onDeleteTask}: KanbanBoardProps) {
   const [activeColumnIndex, setActiveColumnIndex] = useState(0)
+  const [activeId, setActiveId] = useState<string | null>(null)
 
   const columns: KanbanColumnConfig[] = [
     {status: "todo", title: "A fazer", tasks: todoTasks},
     {status: "doing", title: "Em andamento", tasks: doingTasks},
     {status: "done", title: "Feito", tasks: doneTasks},
   ]
+
+  const activeTask = [...todoTasks, ...doingTasks, ...doneTasks].find(task => task.id === activeId)
 
   const isFirstColumnActive = activeColumnIndex === 0
   const isLastColumnActive = activeColumnIndex === columns.length - 1
@@ -41,6 +47,24 @@ export default function KanbanBoard({todoTasks, doingTasks, doneTasks, onOpenMod
 
   function showNextColumn() {
     setActiveColumnIndex((currentIndex) => Math.min(columns.length - 1, currentIndex + 1))
+  }
+
+  function handleDragStart(event: DragStartEvent) {
+    setActiveId(String(event.active.id))
+  }
+
+  function handleDragEnd(event: DragEndEvent) {
+    const {active, over} = event
+
+    setActiveId(null)
+
+    if(!over) {
+      return
+    }
+
+    const taskId = active.id as string
+    const newStatus = over.id as TaskStatus
+    onMoveTask(taskId, newStatus)
   }
 
   return (
@@ -55,24 +79,30 @@ export default function KanbanBoard({todoTasks, doingTasks, doneTasks, onOpenMod
         <img src={navigateBefore} alt=""/>
       </button>
 
-      <section className="kanban-board" data-kanban-board>
-        {columns.map((column, index) => (
-          <KanbanColumn
-            key={column.status}
-            status={column.status}
-            title={column.title}
-            tasks={column.tasks}
-            isActive={index === activeColumnIndex}
-            headerAction={column.status === "todo" ? (
-              <button className="add-task-button" type="button" onClick={onOpenModal} aria-label="Criar nova task">
-                <img src={closeButton} alt=""/>
-              </button>
-            ) : undefined}
-            onMoveTask={onMoveTask}
-            onDeleteTask={onDeleteTask}
-          />
-        ))}
-      </section>
+      <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+        <section className="kanban-board" data-kanban-board>
+          {columns.map((column, index) => (
+            <KanbanColumn
+              key={column.status}
+              status={column.status}
+              title={column.title}
+              tasks={column.tasks}
+              isActive={index === activeColumnIndex}
+              headerAction={column.status === "todo" ? (
+                <button className="add-task-button" type="button" onClick={onOpenModal} aria-label="Criar nova task">
+                  <img src={closeButton} alt=""/>
+                </button>
+              ) : undefined}
+              onMoveTask={onMoveTask}
+              onDeleteTask={onDeleteTask}
+            />
+          ))}
+        </section>
+
+        <DragOverlay dropAnimation={null}>
+          {activeTask ? <TaskCardPreview task={activeTask} /> : null}
+        </DragOverlay>
+      </DndContext>
 
       <button
         className="kanban-navigation-button kanban-navigation-button-next"

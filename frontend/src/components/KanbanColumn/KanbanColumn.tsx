@@ -2,6 +2,7 @@ import { TaskCard } from "../TaskCard/TaskCard";
 
 import type { ReactNode } from "react";
 import type { Task, TaskStatus } from "../../types/task";
+import { useDroppable } from "@dnd-kit/core";
 
 import "./KanbanColumn.css"
 
@@ -11,11 +12,13 @@ interface KanbanColumnProps {
     tasks: Task[]
     headerAction?: ReactNode
     isActive?: boolean
-    onMoveTask: (taskId: string, direction: "forward" | "backward" | "reset") => void
+    onMoveTask: (taskId: string, newStatus: TaskStatus) => void
     onDeleteTask: (taskId: string) => void
 }
 
 export function KanbanColumn({status, title, tasks, headerAction, isActive = true, onMoveTask, onDeleteTask}: KanbanColumnProps) {
+    const { setNodeRef } = useDroppable({id: status})
+
     return (
         <section
             className={isActive ? "kanban-column kanban-column-active" : "kanban-column"}
@@ -26,7 +29,7 @@ export function KanbanColumn({status, title, tasks, headerAction, isActive = tru
                 {headerAction}
             </header>
 
-            <div className="kanban-column-tasks" data-droppable-id={status}>
+            <div className="kanban-column-tasks" data-droppable-id={status} ref={setNodeRef}>
                 {tasks.map((task) => (
                     <TaskCard
                         key={task.id}
