@@ -7,7 +7,11 @@ interface ProtectedRouteProps {
 }
 
 export default function ProtectedRoute({children}: ProtectedRouteProps) {
-    const {token} = useAuth()
+    const {loading, token} = useAuth()
+
+    if(loading) {
+        return null
+    }
 
     if(!token) {
         return <Navigate to="/login" replace />

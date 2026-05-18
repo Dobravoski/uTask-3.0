@@ -46,3 +46,7 @@ Thumbs.db
 
 # Swap/temp
 *.sw?
+
+.env
+dist
+node_modules

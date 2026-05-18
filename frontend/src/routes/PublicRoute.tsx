@@ -7,7 +7,11 @@ interface PublicRouteProps {
 }
 
 export default function PublicRoute({children}: PublicRouteProps) {
-    const {token} = useAuth();
+    const {loading, token} = useAuth();
+
+    if(loading) {
+        return null
+    }
 
     if(token) {
         return <Navigate to="/" replace />

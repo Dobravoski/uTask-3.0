@@ -9,6 +9,7 @@ export interface User {
 export interface AuthContextData {
     user: User | null,
     token: string | null,
+    loading: boolean,
 
     login: (email: string, password: string) => Promise<void>,
 
