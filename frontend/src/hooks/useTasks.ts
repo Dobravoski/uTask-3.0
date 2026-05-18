@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { taskService } from "../services/taskService"
 import type { Task, TaskStatus } from "../types/task"
-import { getNextStatus, getPreviousStatus } from "../utils/taskStatus"
 
 export function useTasks() {
     const [tasks, setTasks] = useState<Task[]>([])
@@ -34,28 +33,8 @@ export function useTasks() {
         }
     }
 
-    async function moveTask(taskId: string, direction: "forward" | "backward" | "reset") {
+    async function moveTask(taskId: string, newStatus: TaskStatus) {
         try {
-            const taskToUpdate = tasks.find((task) => task.id === taskId)
-
-            if(!taskToUpdate) {
-                return
-            }
-
-            let newStatus: TaskStatus = taskToUpdate.status
-
-            if (direction === "forward") {
-                newStatus = getNextStatus(taskToUpdate.status) ?? taskToUpdate.status
-            }
-
-            if (direction === "backward") {
-                newStatus = getPreviousStatus(taskToUpdate.status) ?? taskToUpdate.status
-            }
-
-            if (direction === "reset") {
-                newStatus = "todo"
-            }
-
             const updatedTask = await taskService.updateTaskStatus(taskId, newStatus)
 
             setTasks((currentTasks) => {
@@ -63,10 +42,20 @@ export function useTasks() {
 
                 return [...updatedTasks].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
             })
-
-            await loadTasks()
         } catch (error) {
             console.error("Erro ao mover task:", error)
+        }
+    }
+
+    async function updateTask(taskId: string, title: string, description: string) {
+        try {
+            const updatedTask = await taskService.updateTask(taskId, title, description)
+
+            setTasks((currentTasks) => (
+                currentTasks.map((task) => task.id === taskId ? updatedTask : task)
+            ))
+        } catch (error) {
+            console.error("Erro ao atualizar task:", error)
         }
     }
 
@@ -74,7 +63,6 @@ export function useTasks() {
         try {
             await taskService.deleteTask(taskId)
             setTasks((currentTasks) => currentTasks.filter((task) => task.id !== taskId))
-            await loadTasks()
         } catch (error) {
             console.error("Erro ao deletar task:", error)
         }
@@ -85,6 +73,7 @@ export function useTasks() {
         isLoading,
         createTask,
         moveTask,
+        updateTask,
         deleteTask,
     }
 }

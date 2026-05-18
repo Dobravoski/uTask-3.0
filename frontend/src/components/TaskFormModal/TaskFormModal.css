@@ -14,7 +14,7 @@
   z-index: 1000;
 }
 
-.create-task-modal {
+.task-form-modal {
   width: min(520px, 100%);
 
   padding: 34px 54px 42px;
@@ -145,7 +145,7 @@
   min-height: 98px;
 }
 
-.create-task-button {
+.task-form-submit-button {
   height: 46px;
   margin-top: 20px;
 
@@ -163,13 +163,13 @@
   transition: transform var(--transition-default), box-shadow var(--transition-default);
 }
 
-.create-task-button:hover {
+.task-form-submit-button:hover {
   transform: translateY(-1px);
   box-shadow: var(--shadow-button-primary);
 }
 
 @media (max-width: 640px) {
-  .create-task-modal {
+  .task-form-modal {
     padding: 28px 22px 30px;
     gap: 28px;
   }

@@ -18,6 +18,11 @@ export const taskService = {
     return response.data;
   },
 
+  async updateTask(taskId: string, title: string, description: string): Promise<Task> {
+    const response = await api.patch(`/tasks/${taskId}`, {title, description});
+    return response.data;
+  },
+
   async deleteTask(taskId: string): Promise<void> {
     await api.delete(`/tasks/${taskId}`);
   },

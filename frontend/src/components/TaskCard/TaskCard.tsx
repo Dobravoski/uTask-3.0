@@ -1,10 +1,13 @@
 import { useState, useEffect, useRef } from "react";
-import type { Task } from "../../types/task";
+import type { Task, TaskStatus } from "../../types/task";
 import { getNextStatus, getPreviousStatus } from "../../utils/taskStatus";
+
+import { useDraggable } from "@dnd-kit/core";
 
 import "./TaskCard.css"
 import backwardButton from "../../assets/backward-button.svg"
 import deleteIcon from "../../assets/delete-kanban.svg"
+import editIcon from "../../assets/edit-kanban.svg"
 import expandLessIcon from "../../assets/expand-less-kanban.svg"
 import expandMoreIcon from "../../assets/expand-more-kanban.svg"
 import forwardButton from "../../assets/forward-button.svg"
@@ -13,19 +16,76 @@ import resetButton from "../../assets/reset-button.svg"
 
 interface TaskCardProps {
     task: Task
-    onMoveTask: (taskId: string, direction: "forward" | "backward" | "reset") => void
+    onMoveTask: (taskId: string, newStatus: TaskStatus) => void
+    onEditTask: (task: Task) => void
     onDeleteTask: (taskId: string) => void
 }
 
-export function TaskCard({task, onMoveTask, onDeleteTask}: TaskCardProps) {
+interface TaskCardPreviewProps {
+    task: Task
+}
+
+export function TaskCardPreview({task}: TaskCardPreviewProps) {
+    const canMoveForward = getNextStatus(task.status) !== null
+    const canMoveBackward = getPreviousStatus(task.status) !== null
+    const canReset = task.status === "done"
+
+    return (
+        <article
+            className={task.status === "done" ? "task-card task-card-done task-card-overlay" : "task-card task-card-overlay"}
+            data-task-status={task.status}
+        >
+            <div className="task-card-header">
+                <h3>{task.title}</h3>
+
+                <div className="task-menu">
+                    <button className="task-menu-button" type="button" aria-label="Mais opções" tabIndex={-1}>
+                        <img src={moreOptionsIcon} alt=""/>
+                    </button>
+                </div>
+            </div>
+
+            <div className="task-card-footer">
+                <button className="task-description-button" type="button" tabIndex={-1}>
+                    Ler descrição
+                    <img src={expandMoreIcon} alt=""/>
+                </button>
+
+                <div className="task-card-actions">
+                    {canMoveBackward && (
+                        <button type="button" aria-label="Voltar task" tabIndex={-1}>
+                            <img src={backwardButton} alt=""/>
+                        </button>
+                    )}
+                    {canMoveForward && (
+                        <button type="button" aria-label="Avançar task" tabIndex={-1}>
+                            <img src={forwardButton} alt=""/>
+                        </button>
+                    )}
+                    {canReset && (
+                        <button type="button" aria-label="Reiniciar task" tabIndex={-1}>
+                            <img src={resetButton} alt=""/>
+                        </button>
+                    )}
+                </div>
+            </div>
+        </article>
+    )
+}
+
+export function TaskCard({task, onMoveTask, onEditTask, onDeleteTask}: TaskCardProps) {
     const [isDescriptionOpen, setIsDescriptionOpen] = useState(false)
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     const menuRef = useRef<HTMLDivElement | null>(null)
 
+    const { attributes, listeners, setNodeRef, isDragging} = useDraggable({id:task.id})
+
     const canMoveForward = getNextStatus(task.status) !== null
     const canMoveBackward = getPreviousStatus(task.status) !== null
     const canReset = task.status === "done"
+    const nextStatus = getNextStatus(task.status)
+    const previousStatus = getPreviousStatus(task.status)
     const description = task.description.trim() || "Sem descrição cadastrada."
 
     useEffect(() => {
@@ -45,16 +105,27 @@ export function TaskCard({task, onMoveTask, onDeleteTask}: TaskCardProps) {
         setIsMenuOpen(false)
     }
 
+    function handleEditTask() {
+        onEditTask(task)
+        setIsMenuOpen(false)
+    }
+
     return (
         <article
-            className={task.status === "done" ? "task-card task-card-done" : "task-card"}
+            ref={setNodeRef}
+            {...attributes}
+            className={[
+                "task-card",
+                task.status === "done" ? "task-card-done" : "",
+                isDragging ? "task-card-dragging" : "",
+            ].filter(Boolean).join(" ")}
             data-draggable-id={task.id}
             data-task-status={task.status}
         >
-            <div className="task-card-header">
+            <div className="task-card-header" {...listeners}>
                 <h3>{task.title}</h3>
 
-                <div className="task-menu" ref={menuRef}>
+                <div className="task-menu" ref={menuRef} onPointerDown={(event) => event.stopPropagation()}>
                     <button
                         className="task-menu-button"
                         type="button"
@@ -66,10 +137,16 @@ export function TaskCard({task, onMoveTask, onDeleteTask}: TaskCardProps) {
                     </button>
 
                     {isMenuOpen && (
-                        <button className="task-delete-button" type="button" onClick={handleDeleteTask}>
-                            <img src={deleteIcon} alt=""/>
-                            Excluir
-                        </button>
+                        <div className="task-menu-options">
+                            <button className="task-menu-option-button" type="button" onClick={handleEditTask}>
+                                <img src={editIcon} alt=""/>
+                                Editar
+                            </button>
+                            <button className="task-menu-option-button task-menu-delete-button" type="button" onClick={handleDeleteTask}>
+                                <img src={deleteIcon} alt=""/>
+                                Excluir
+                            </button>
+                        </div>
                     )}
                 </div>
             </div>
@@ -86,17 +163,17 @@ export function TaskCard({task, onMoveTask, onDeleteTask}: TaskCardProps) {
 
                 <div className="task-card-actions">
                     {canMoveBackward && (
-                        <button type="button" onClick={() => onMoveTask(task.id, "backward")} aria-label="Voltar task">
+                        <button type="button" onClick={() => {if(previousStatus) onMoveTask(task.id, previousStatus)}} aria-label="Voltar task">
                             <img src={backwardButton} alt=""/>
                         </button>
                     )}
                     {canMoveForward && (
-                        <button type="button" onClick={() => onMoveTask(task.id, "forward")} aria-label="Avançar task">
+                        <button type="button" onClick={() => {if(nextStatus) onMoveTask(task.id, nextStatus)}} aria-label="Avançar task">
                             <img src={forwardButton} alt=""/>
                         </button>
                     )}
                     {canReset && (
-                        <button type="button" onClick={() => onMoveTask(task.id, "reset")} aria-label="Reiniciar task">
+                        <button type="button" onClick={() => onMoveTask(task.id, "todo")} aria-label="Reiniciar task">
                             <img src={resetButton} alt=""/>
                         </button>
                     )}
