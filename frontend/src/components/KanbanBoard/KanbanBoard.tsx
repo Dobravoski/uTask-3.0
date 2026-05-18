@@ -32,12 +32,15 @@ export default function KanbanBoard({todoTasks, doingTasks, doneTasks, onOpenMod
     {status: "done", title: "Feito", tasks: doneTasks},
   ]
 
+  const isFirstColumnActive = activeColumnIndex === 0
+  const isLastColumnActive = activeColumnIndex === columns.length - 1
+
   function showPreviousColumn() {
-    setActiveColumnIndex((currentIndex) => currentIndex === 0 ? columns.length - 1 : currentIndex - 1)
+    setActiveColumnIndex((currentIndex) => Math.max(0, currentIndex - 1))
   }
 
   function showNextColumn() {
-    setActiveColumnIndex((currentIndex) => currentIndex === columns.length - 1 ? 0 : currentIndex + 1)
+    setActiveColumnIndex((currentIndex) => Math.min(columns.length - 1, currentIndex + 1))
   }
 
   return (
@@ -46,6 +49,7 @@ export default function KanbanBoard({todoTasks, doingTasks, doneTasks, onOpenMod
         className="kanban-navigation-button kanban-navigation-button-previous"
         type="button"
         onClick={showPreviousColumn}
+        disabled={isFirstColumnActive}
         aria-label="Ver coluna anterior"
       >
         <img src={navigateBefore} alt=""/>
@@ -74,6 +78,7 @@ export default function KanbanBoard({todoTasks, doingTasks, doneTasks, onOpenMod
         className="kanban-navigation-button kanban-navigation-button-next"
         type="button"
         onClick={showNextColumn}
+        disabled={isLastColumnActive}
         aria-label="Ver proxima coluna"
       >
         <img src={navigateNext} alt=""/>

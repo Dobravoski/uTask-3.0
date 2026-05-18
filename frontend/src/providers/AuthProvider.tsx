@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react"
 
 import * as authService from "../services/authService"
+import { AuthContext, type User } from "../contexts/authContext"
+
 import { api } from "../services/api"
-import { AuthContext, type User } from "./authContext"
 
 interface AuthProviderProps {
     children: ReactNode

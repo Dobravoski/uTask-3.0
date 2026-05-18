@@ -1,10 +1,11 @@
 .login-container {
-    min-height: calc(100vh - 50px);
+    min-height: calc(100vh - 56px);
     padding: 24px 40px;
 
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: var(--color-background-primary);
 }
 
 .login-content {
@@ -32,7 +33,7 @@
 .divider {
     width: 2px;
     height: min(76vh, 610px);
-    background-color: rgba(156, 199, 251, 0.7);
+    background-color: var(--color-auth-divider);
 }
 
 .login-form {
@@ -41,12 +42,36 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    position: relative;
+}
+
+[data-theme="dark"] .login-form::before {
+    content: "";
+    width: min(448px, calc(100% + 72px));
+
+    position: absolute;
+    top: -38px;
+    bottom: -38px;
+    left: 50%;
+    z-index: 0;
+
+    border-radius: var(--radius-large);
+    background-color: var(--color-background-tertiary);
+    box-shadow: var(--shadow-card);
+
+    transform: translateX(-50%);
+}
+
+.login-form > * {
+    position: relative;
+    z-index: 1;
 }
 
 .login-form h1 {
     margin: 0 0 37px;
 
-    color: #226ED8;
+    color: var(--color-primary-main);
     font-size: 48px;
     line-height: 1;
     font-weight: 700;
@@ -75,7 +100,7 @@
 }
 
 .input-group label {
-    color: #001833;
+    color: var(--color-auth-text);
     font-size: 15px;
     line-height: 1;
     font-weight: 400;
@@ -86,21 +111,21 @@
     width: 100%;
     height: 39px;
 
-    border: 1px solid #002D6C;
-    border-radius: 8px;
-    background-color: #EDF3FC;
+    border: 1px solid var(--color-primary-dark);
+    border-radius: var(--radius-medium);
+    background-color: var(--color-auth-input-background);
 }
 
 .input {
     padding: 0 12px;
 
-    color: #001833;
+    color: var(--color-auth-text);
     font-size: 14px;
     outline: none;
 }
 
 .input::placeholder {
-    color: #5E7699;
+    color: var(--color-auth-placeholder);
 }
 
 .password-field {
@@ -117,8 +142,8 @@
 }
 
 .password-field.error {
-    border-color: #CC0000;
-    background-color: #FFECEC;
+    border-color: var(--color-error);
+    background-color: var(--color-error-background);
 }
 
 .password-toggle {
@@ -149,7 +174,7 @@
 .error-message {
     margin: 6px 0 0;
 
-    color: #CC0000;
+    color: var(--color-error);
     font-size: 11px;
     line-height: 1;
 }
@@ -161,7 +186,7 @@
     border: 0;
     background-color: transparent;
 
-    color: #226ED8;
+    color: var(--color-primary-main);
     font-size: 11px;
     line-height: 1;
     text-decoration: underline;
@@ -175,9 +200,9 @@
     padding: 0 16px;
 
     border: none;
-    border-radius: 18px;
-    background-color: #226ED8;
-    color: #FFFFFF;
+    border-radius: var(--radius-large);
+    background-color: var(--color-button-primary-background);
+    color: var(--color-button-primary-text);
 
     font-size: 15px;
     font-weight: 700;
@@ -185,17 +210,35 @@
     cursor: pointer;
 }
 
+[data-theme="dark"] .login-button {
+    transition: transform var(--transition-default), box-shadow var(--transition-default);
+}
+
+[data-theme="dark"] .login-button:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-button-primary);
+}
+
 .form-divider {
     width: 45%;
     height: 1px;
     margin: 31px auto 0;
-    background-color: #3B5F91;
+    background-color: var(--color-primary-dark);
+}
+
+[data-theme="dark"] .input,
+[data-theme="dark"] .password-field {
+    border-color: var(--color-input-border);
+}
+
+[data-theme="dark"] .form-divider {
+    background-color: var(--color-auth-divider);
 }
 
 .register-link {
     margin-top: 30px;
 
-    color: #001833;
+    color: var(--color-auth-text);
     font-size: 14px;
     line-height: 1;
     text-align: center;
@@ -216,6 +259,10 @@
 }
 
 @media (max-width: 480px) {
+
+    [data-theme="dark"] .login-form::before {
+        content: none;
+    }
 
     .login-form {
         align-items: center;
@@ -264,7 +311,7 @@
     .login-button {
         height: 46px;
         margin-top: 27px;
-        border-radius: 18px;
+        border-radius: var(--radius-large);
         font-size: 16px;
     }
 

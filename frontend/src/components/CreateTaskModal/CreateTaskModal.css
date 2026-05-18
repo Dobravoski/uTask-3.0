@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
 
-  background-color: rgba(32, 33, 36, 0.48);
+  background-color: var(--color-overlay-backdrop);
   backdrop-filter: blur(1px);
 
   display: flex;
@@ -19,14 +19,18 @@
 
   padding: 34px 54px 42px;
 
-  border-radius: 20px;
+  border-radius: var(--radius-large);
 
-  background-color: #ffffff;
-  box-shadow: 0 22px 50px rgba(27, 39, 58, 0.22);
+  background-color: var(--color-surface-primary);
+  box-shadow: var(--shadow-modal);
 
   display: flex;
   flex-direction: column;
   gap: 34px;
+}
+
+[data-theme="dark"] .modal-overlay {
+  backdrop-filter: none;
 }
 
 .modal-header {
@@ -38,7 +42,7 @@
 .modal-header h2 {
   grid-column: 2;
 
-  color: #3867d6;
+  color: var(--color-primary-main);
 
   font-size: 1.45rem;
   font-weight: 700;
@@ -53,9 +57,9 @@
   width: 132px;
   height: 3px;
 
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 
-  background-color: #3867d6;
+  background-color: var(--color-primary-main);
 
   position: absolute;
   left: 50%;
@@ -100,7 +104,7 @@
 }
 
 .modal-field label {
-  color: #202124;
+  color: var(--color-text-primary);
 
   font-size: 0.84rem;
   font-weight: 700;
@@ -112,23 +116,28 @@
 
   padding: 13px 16px;
 
-  border: 1px solid transparent;
-  border-radius: 10px;
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--radius-medium);
   outline: none;
 
-  background-color: #eeeeef;
-  color: #202124;
+  background-color: var(--color-input-background);
+  color: var(--color-input-text);
 
   font-size: 0.96rem;
   line-height: 1.45;
 
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color var(--transition-default), box-shadow var(--transition-default);
+}
+
+.modal-field input::placeholder,
+.modal-field textarea::placeholder {
+  color: var(--color-input-placeholder);
 }
 
 .modal-field input:focus,
 .modal-field textarea:focus {
-  border-color: #74a7ff;
-  box-shadow: 0 0 0 3px rgba(34, 110, 216, 0.14);
+  border-color: var(--color-input-focus-border);
+  box-shadow: var(--shadow-focus-ring);
 }
 
 .modal-field textarea {
@@ -141,22 +150,22 @@
   margin-top: 20px;
 
   border: none;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 
-  background: linear-gradient(90deg, #4b97f6 0%, #226ed8 100%);
-  color: #ffffff;
+  background: var(--color-button-primary-background);
+  color: var(--color-button-primary-text);
 
   cursor: pointer;
 
   font-size: 0.95rem;
   font-weight: 500;
 
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform var(--transition-default), box-shadow var(--transition-default);
 }
 
 .create-task-button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 12px 20px rgba(34, 110, 216, 0.24);
+  box-shadow: var(--shadow-button-primary);
 }
 
 @media (max-width: 640px) {

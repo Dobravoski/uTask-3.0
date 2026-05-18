@@ -76,7 +76,7 @@ export function TaskCard({task, onMoveTask, onDeleteTask}: TaskCardProps) {
 
             <div className="task-card-footer">
                 <button
-                    className="task-description-button"
+                    className={isDescriptionOpen ? "task-description-button task-description-button-open" : "task-description-button"}
                     type="button"
                     onClick={() => setIsDescriptionOpen(!isDescriptionOpen)}
                 >
