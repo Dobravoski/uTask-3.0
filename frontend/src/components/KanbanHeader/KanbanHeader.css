@@ -3,7 +3,7 @@
     height: 80px;
     flex: 0 0 80px;
 
-    background-color: var(--color-header-background);
+    background-color: var(--color-primary-main);
     box-shadow: var(--shadow-header);
 
     display: flex;
@@ -28,10 +28,11 @@
     height: 40px;
 
     object-fit: contain;
+    filter: brightness(0) invert(1);
 }
 
 .header h1 {
-    color: var(--color-primary-main);
+    color: var(--color-button-primary-text);
 
     font-size: 2rem;
     font-weight: 700;
@@ -80,4 +81,17 @@
     .header h1 {
         font-size: 1.9rem;
     }
+}
+
+[data-theme="dark"] .header {
+    background-color: var(--color-header-background);
+    border-bottom-color: transparent;
+}
+
+[data-theme="dark"] .header h1 {
+    color: var(--color-primary-main);
+}
+
+[data-theme="dark"] .header-logo {
+    filter: none;
 }

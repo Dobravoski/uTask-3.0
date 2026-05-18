@@ -118,28 +118,28 @@
 
     /*MAIN BACKGROUNDS*/
 
-    --color-background-primary: #222222;
-    --color-background-secondary: #2E2E2E;
-    --color-background-tertiary: #333333;
-    --color-background-quaternary: #3D3D3D;
+    --color-background-primary: #1E1E1E;
+    --color-background-secondary: #252525;
+    --color-background-tertiary: #303030;
+    --color-background-quaternary: #5B5B5B;
 
     /*SURFACES / CARDS / MODALS*/
 
-    --color-surface-primary: #2E2E2E;
-    --color-surface-secondary: #333333;
-    --color-surface-tertiary: #3D3D3D;
+    --color-surface-primary: #3F3F3F;
+    --color-surface-secondary: #383838;
+    --color-surface-tertiary: #2E2E2E;
 
     /*TEXT COLORS*/
 
     --color-text-primary: #FAFAFA;
-    --color-text-secondary: #C4C4C4;
-    --color-text-muted: #A0A0A0;
+    --color-text-secondary: #E5E5E5;
+    --color-text-muted: #B5B5B5;
     --color-text-inverse: #141414;
 
     /*PRIMARY BLUE COLORS*/
 
     --color-primary-main: #226ED8;
-    --color-primary-hover: #5C9DFF;
+    --color-primary-hover: #4890F5;
     --color-primary-light: #4890F5;
     --color-primary-dark: #111111;
 
@@ -158,8 +158,8 @@
 
     /*BORDERS*/
 
-    --color-border-primary: #515151;
-    --color-border-secondary: #3D3D3D;
+    --color-border-primary: #3A3A3A;
+    --color-border-secondary: #303030;
 
     /*ICON COLORS*/
 
@@ -196,7 +196,7 @@
 
     /*SCROLLBAR COLORS*/
 
-    --color-scrollbar-thumb: #515151;
+    --color-scrollbar-thumb: #696969;
     --color-scrollbar-track: transparent;
 
     /*AUTH / FEEDBACK*/
@@ -210,4 +210,8 @@
     --color-feedback-border: #515151;
     --color-feedback-success-background: rgba(34, 110, 216, 0.2);
     --color-feedback-error-background: rgba(255, 175, 175, 0.18);
+
+    --color-header-background: #303030;
+    --color-footer-background: #0D0D0D;
+    --color-overlay-backdrop: rgba(0, 0, 0, 0.66);
 }

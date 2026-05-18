@@ -122,6 +122,10 @@
     height: 8px;
 }
 
+.task-description-button-open {
+    color: var(--color-primary-main);
+}
+
 .task-card-actions {
     display: flex;
     align-items: center;
@@ -154,4 +158,13 @@
     word-break: break-word;
     overflow-wrap: break-word;
     white-space: pre-wrap;
+}
+
+[data-theme="dark"] .task-description-button,
+[data-theme="dark"] .task-description {
+    color: var(--color-text-secondary);
+}
+
+[data-theme="dark"] .task-description-button-open {
+    color: var(--color-primary-light);
 }

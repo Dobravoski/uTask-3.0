@@ -1,15 +1,8 @@
-import { createContext, useContext, useLayoutEffect, useState, type ReactNode } from "react";
+import { useLayoutEffect, useState, type ReactNode } from "react";
 
-type Theme = "light" | "dark";
-
-interface ThemeContextProps {
-    theme: Theme;
-    toggleTheme: () => void;
-}
+import { ThemeContext, type Theme } from "../contexts/themeContext";
 
 const THEME_STORAGE_KEY = "@utask-theme";
-
-const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
 function getStoredTheme(): Theme {
     if (typeof window === "undefined") {
@@ -37,14 +30,4 @@ export function ThemeProvider({children}: {children: ReactNode}) {
             {children}
         </ThemeContext.Provider>
     );
-}
-
-export function useTheme() {
-    const context = useContext(ThemeContext);
-
-    if (!context) {
-        throw new Error("useTheme must be used inside ThemeProvider");
-    }
-
-    return context;
 }

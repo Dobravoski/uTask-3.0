@@ -1,5 +1,5 @@
 import "./KanbanHeader.css";
-import { useTheme } from "../../contexts/ThemeContext";
+import { useTheme } from "../../hooks/useTheme";
 import darkModeButton from "../../assets/dark-mode-button.svg"
 import lightModeButton from "../../assets/light-mode-button.svg"
 import unectLogo from "../../assets/unect-logo.svg"

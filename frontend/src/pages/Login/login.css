@@ -1,10 +1,11 @@
 .login-container {
-    min-height: calc(100vh - 50px);
+    min-height: calc(100vh - 56px);
     padding: 24px 40px;
 
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: var(--color-background-primary);
 }
 
 .login-content {
@@ -41,6 +42,30 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    position: relative;
+}
+
+[data-theme="dark"] .login-form::before {
+    content: "";
+    width: min(448px, calc(100% + 72px));
+
+    position: absolute;
+    top: -38px;
+    bottom: -38px;
+    left: 50%;
+    z-index: 0;
+
+    border-radius: var(--radius-large);
+    background-color: var(--color-background-tertiary);
+    box-shadow: var(--shadow-card);
+
+    transform: translateX(-50%);
+}
+
+.login-form > * {
+    position: relative;
+    z-index: 1;
 }
 
 .login-form h1 {
@@ -185,11 +210,29 @@
     cursor: pointer;
 }
 
+[data-theme="dark"] .login-button {
+    transition: transform var(--transition-default), box-shadow var(--transition-default);
+}
+
+[data-theme="dark"] .login-button:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-button-primary);
+}
+
 .form-divider {
     width: 45%;
     height: 1px;
     margin: 31px auto 0;
     background-color: var(--color-primary-dark);
+}
+
+[data-theme="dark"] .input,
+[data-theme="dark"] .password-field {
+    border-color: var(--color-input-border);
+}
+
+[data-theme="dark"] .form-divider {
+    background-color: var(--color-auth-divider);
 }
 
 .register-link {
@@ -216,6 +259,10 @@
 }
 
 @media (max-width: 480px) {
+
+    [data-theme="dark"] .login-form::before {
+        content: none;
+    }
 
     .login-form {
         align-items: center;

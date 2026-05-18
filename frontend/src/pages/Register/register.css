@@ -1,10 +1,11 @@
 .register-container {
-    min-height: calc(100vh - 50px); /* 50px do Header */
+    min-height: calc(100vh - 56px); /* 56px do Header */
     padding: 30px 40px 22px; /* topo, esqueda/direita, baixo */
 
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: var(--color-background-primary);
 }
 
 .register-content {
@@ -41,6 +42,30 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    position: relative;
+}
+
+[data-theme="dark"] .register-form::before {
+    content: "";
+    width: min(412px, calc(100% + 72px));
+
+    position: absolute;
+    top: -36px;
+    bottom: -38px;
+    left: 50%;
+    z-index: 0;
+
+    border-radius: var(--radius-large);
+    background-color: var(--color-background-tertiary);
+    box-shadow: var(--shadow-card);
+
+    transform: translateX(-50%);
+}
+
+.register-form > * {
+    position: relative;
+    z-index: 1;
 }
 
 .register-form h1 {
@@ -66,6 +91,10 @@
     width: 155px;
     height: 1px;
     background-color: var(--color-primary-dark);
+}
+
+[data-theme="dark"] .register-title-divider::before {
+    background-color: var(--color-auth-divider);
 }
 
 .register-form-wrapper {
@@ -197,6 +226,20 @@
     cursor: pointer;
 }
 
+[data-theme="dark"] .register-input,
+[data-theme="dark"] .register-password-field {
+    border-color: var(--color-input-border);
+}
+
+[data-theme="dark"] .register-button {
+    transition: transform var(--transition-default), box-shadow var(--transition-default);
+}
+
+[data-theme="dark"] .register-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-button-primary);
+}
+
 .register-button:disabled {
     opacity: 0.7;
     cursor: not-allowed;
@@ -215,6 +258,10 @@
 }
 
 @media (max-width: 480px) {
+    [data-theme="dark"] .register-form::before {
+        content: none;
+    }
+
     .register-container {
         padding: 0px 24px;
         align-items: center;

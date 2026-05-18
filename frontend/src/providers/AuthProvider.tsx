@@ -1,20 +1,6 @@
-import { createContext, useContext, useState, type ReactNode } from "react"
+import { useState, type ReactNode } from "react"
 import * as authService from "../services/authService"
-
-interface User {
-    id: string,
-    name: string,
-    email: string
-}
-
-interface AuthContextData {
-    user: User | null,
-    token: string | null
-
-    login: (email: string, password: string) => Promise<void>
-
-    logout: () => void
-}
+import { AuthContext, type User } from "../contexts/authContext"
 
 interface AuthProviderProps {
     children: ReactNode
@@ -22,8 +8,6 @@ interface AuthProviderProps {
 
 const USER_STORAGE_KEY = "@utask:user"
 const TOKEN_STORAGE_KEY = "@utask:token"
-
-const AuthContext = createContext<AuthContextData | undefined>(undefined)
 
 function getStoredUser() {
     const storedUser = localStorage.getItem(USER_STORAGE_KEY)
@@ -88,14 +72,4 @@ export function AuthProvider({children}: AuthProviderProps) {
             {children}
         </AuthContext.Provider>
     )
-}
-
-export function useAuth() {
-    const context = useContext(AuthContext);
-
-    if(!context) {
-        throw new Error("useAuth deve ser usado dentro de um AuthProvider");
-    }
-
-    return context;
 }
