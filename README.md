@@ -215,13 +215,13 @@ This section is reserved for the personal timeline behind the project. I want th
 
 ### Timeline
 
-- Started learning HTML and CSS: 04/26/2026
-- Started learning JavaScript: 04/27/2026
-- Started learning React and TypeScript: 04/27/2026
-- Started building uTask 3.0 front-end: 05/08/2026
-- Started studying backend development: 05/15
-- Started learning databases and PostgreSQL: **[add date here]**
-- Finished the first complete version: **[add date here]**
+- Started learning HTML and CSS: 04/26/26
+- Started learning JavaScript: 04/27/26
+- Started learning React and TypeScript: 04/27/26
+- Started building uTask 3.0 front-end: 05/08/26
+- Started studying backend development: 05/15/26
+- Started learning databases and PostgreSQL: 05/15/26
+- Finished the first complete version: 05/18/26
 
 ### Notes from the process
 
