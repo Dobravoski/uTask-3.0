@@ -47,6 +47,18 @@ export function useTasks() {
         }
     }
 
+    async function updateTask(taskId: string, title: string, description: string) {
+        try {
+            const updatedTask = await taskService.updateTask(taskId, title, description)
+
+            setTasks((currentTasks) => (
+                currentTasks.map((task) => task.id === taskId ? updatedTask : task)
+            ))
+        } catch (error) {
+            console.error("Erro ao atualizar task:", error)
+        }
+    }
+
     async function deleteTask(taskId: string) {
         try {
             await taskService.deleteTask(taskId)
@@ -61,6 +73,7 @@ export function useTasks() {
         isLoading,
         createTask,
         moveTask,
+        updateTask,
         deleteTask,
     }
 }

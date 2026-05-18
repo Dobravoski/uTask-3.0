@@ -17,6 +17,7 @@ interface KanbanBoardProps {
   doneTasks: Task[]
   onOpenModal: () => void
   onMoveTask: (taskId: string, newStatus: TaskStatus) => void
+  onEditTask: (task: Task) => void
   onDeleteTask: (taskId: string) => void
 }
 
@@ -26,7 +27,7 @@ type KanbanColumnConfig = {
   tasks: Task[]
 }
 
-export default function KanbanBoard({todoTasks, doingTasks, doneTasks, onOpenModal, onMoveTask, onDeleteTask}: KanbanBoardProps) {
+export default function KanbanBoard({todoTasks, doingTasks, doneTasks, onOpenModal, onMoveTask, onEditTask, onDeleteTask}: KanbanBoardProps) {
   const [activeColumnIndex, setActiveColumnIndex] = useState(0)
   const [activeId, setActiveId] = useState<string | null>(null)
 
@@ -94,6 +95,7 @@ export default function KanbanBoard({todoTasks, doingTasks, doneTasks, onOpenMod
                 </button>
               ) : undefined}
               onMoveTask={onMoveTask}
+              onEditTask={onEditTask}
               onDeleteTask={onDeleteTask}
             />
           ))}

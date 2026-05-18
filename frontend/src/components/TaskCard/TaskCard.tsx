@@ -7,6 +7,7 @@ import { useDraggable } from "@dnd-kit/core";
 import "./TaskCard.css"
 import backwardButton from "../../assets/backward-button.svg"
 import deleteIcon from "../../assets/delete-kanban.svg"
+import editIcon from "../../assets/edit-kanban.svg"
 import expandLessIcon from "../../assets/expand-less-kanban.svg"
 import expandMoreIcon from "../../assets/expand-more-kanban.svg"
 import forwardButton from "../../assets/forward-button.svg"
@@ -16,6 +17,7 @@ import resetButton from "../../assets/reset-button.svg"
 interface TaskCardProps {
     task: Task
     onMoveTask: (taskId: string, newStatus: TaskStatus) => void
+    onEditTask: (task: Task) => void
     onDeleteTask: (taskId: string) => void
 }
 
@@ -71,7 +73,7 @@ export function TaskCardPreview({task}: TaskCardPreviewProps) {
     )
 }
 
-export function TaskCard({task, onMoveTask, onDeleteTask}: TaskCardProps) {
+export function TaskCard({task, onMoveTask, onEditTask, onDeleteTask}: TaskCardProps) {
     const [isDescriptionOpen, setIsDescriptionOpen] = useState(false)
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -103,6 +105,11 @@ export function TaskCard({task, onMoveTask, onDeleteTask}: TaskCardProps) {
         setIsMenuOpen(false)
     }
 
+    function handleEditTask() {
+        onEditTask(task)
+        setIsMenuOpen(false)
+    }
+
     return (
         <article
             ref={setNodeRef}
@@ -130,10 +137,16 @@ export function TaskCard({task, onMoveTask, onDeleteTask}: TaskCardProps) {
                     </button>
 
                     {isMenuOpen && (
-                        <button className="task-delete-button" type="button" onClick={handleDeleteTask}>
-                            <img src={deleteIcon} alt=""/>
-                            Excluir
-                        </button>
+                        <div className="task-menu-options">
+                            <button className="task-menu-option-button" type="button" onClick={handleEditTask}>
+                                <img src={editIcon} alt=""/>
+                                Editar
+                            </button>
+                            <button className="task-menu-option-button task-menu-delete-button" type="button" onClick={handleDeleteTask}>
+                                <img src={deleteIcon} alt=""/>
+                                Excluir
+                            </button>
+                        </div>
                     )}
                 </div>
             </div>

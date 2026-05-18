@@ -13,10 +13,11 @@ interface KanbanColumnProps {
     headerAction?: ReactNode
     isActive?: boolean
     onMoveTask: (taskId: string, newStatus: TaskStatus) => void
+    onEditTask: (task: Task) => void
     onDeleteTask: (taskId: string) => void
 }
 
-export function KanbanColumn({status, title, tasks, headerAction, isActive = true, onMoveTask, onDeleteTask}: KanbanColumnProps) {
+export function KanbanColumn({status, title, tasks, headerAction, isActive = true, onMoveTask, onEditTask, onDeleteTask}: KanbanColumnProps) {
     const { setNodeRef } = useDroppable({id: status})
 
     return (
@@ -35,6 +36,7 @@ export function KanbanColumn({status, title, tasks, headerAction, isActive = tru
                         key={task.id}
                         task={task}
                         onMoveTask={onMoveTask}
+                        onEditTask={onEditTask}
                         onDeleteTask={onDeleteTask}
                     />
                 ))}
